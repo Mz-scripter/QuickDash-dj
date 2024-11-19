@@ -1,0 +1,20 @@
+# Django-specific
+*.pyc
+*.pyo
+__pycache__/
+*.sqlite3
+
+# Virtual Environment
+venv/
+env/
+
+# Node.js
+node_modules/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE-specific
+.vscode/
+*.idea/
