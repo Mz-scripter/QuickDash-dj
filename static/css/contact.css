@@ -7,6 +7,7 @@ body {
     background-color: #EFF3F6;
     height: 90vh;
     gap: 20px;
+    display: flex;
     flex-direction: column-reverse;
     padding-bottom: 80px;
     padding-top: 85px;
