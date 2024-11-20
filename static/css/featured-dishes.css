@@ -1,0 +1,154 @@
+#featured-dishes {
+    width: 85%;
+    margin: 40px auto 30px auto;
+}
+
+.restaurant-name {
+    font-weight: 300;
+    font-style: normal;
+}
+
+.restaurant-dishes {
+    display: grid;
+    grid-template-columns: 305px 305px 305px;
+    gap: 3%;
+}
+
+.dish-item {
+    flex-direction: column;
+    max-width: 305px;
+    max-height: 298px;
+    border-radius: 3%;
+    padding: 6px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+
+
+.dish-item:active,
+.dish-item:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+
+.add-cart-icon {
+    width: 100%;
+}
+
+.add-cart {
+    justify-self: flex-end;
+    align-self: flex-end;
+    width: 30px;
+    position: relative;
+    display: inline-block;
+}
+
+.hover-text {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+    font-size: 14px;
+}
+
+.add-cart:hover {
+    opacity: 0.8;
+}
+
+.add-cart:hover .hover-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.top-dish-section {
+    width: 100%;
+    height: 60%;
+    margin-bottom: 15px;
+}
+
+.dish-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3%;
+}
+
+.bottom-dish-section {
+    flex-direction: column;
+
+}
+
+.name-rating-section {
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.dish-name {
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.dish-rating {
+    font-size: 12px;
+}
+
+.star-emoji {
+    color: gold;
+    height: 18px;
+    margin-left: 3px;
+}
+
+.delivery-time-section {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.time-icon {
+    width: 15px;
+    margin-right: 5px;
+}
+
+.time-duration {
+    color: #0077C0;
+    font-weight: 200;
+}
+
+/* RESPONSIVENESS */
+@media (min-width: 1300px){
+    .restaurant-dishes {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 25px;
+    }
+}
+
+
+@media (max-width:950px){
+    .restaurant-dishes {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 500px) {
+    .restaurant-dishes {
+        grid-template-columns: 1fr;
+
+    }
+    .dish-item {
+        margin-bottom: 20px;
+        max-width: 100% ;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+}

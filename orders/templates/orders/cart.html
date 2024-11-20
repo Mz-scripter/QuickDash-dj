@@ -1,0 +1,62 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+    <title>QuickDash |Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+
+<body class="flx">
+    <div class="cart-item-container flx">
+        <h2>Cart (3)</h2>
+        <hr class="section-divider">
+
+        <!-- Cart item -->
+        <div class="cart-item flx">
+            <div class="top-section flx">
+                <div class="prod-details flx">
+                    <img src="https://c4.wallpaperflare.com/wallpaper/503/768/942/food-chocolate-cake-cake-wallpaper-preview.jpg" alt="" class="prod-img">
+                    <div class="prod-title flx">
+                        <div class="prod-name">Strawberry and Chocolate Cake</div>
+                        <div class="seller"><span class="seller-name">Seller: </span> Lorem, ipsum.</div>
+                        <div class="price small">₦ 10999</div>
+                    </div>
+                </div>
+                <div class="price big">₦ 10999</div>
+            </div>
+            <div class="bottom-section flx">
+                <div class="remove">
+                    <a href="" class="btn">
+                        <img src="{ static 'images/remove.svg' %}" alt="" class="rem-icon icon">
+                        Remove
+                    </a>
+                </div>
+                <div class="add-sub flx">
+                    <a href="" class="btn">-</a>
+                    <input type="text" class="quantity" value="{{ cart_item.quantity }}" disabled>
+                    <a href="" class="btn">+</a>
+                </div>
+            </div>
+        </div>
+        <hr class="section-divider">
+        <!-- End of Cart item -->
+    </div>
+    <div class="summary-container flx">
+        <h2>Cart Summary</h2>
+        <hr class="section-divider">
+        <div class="subtotal flx">
+            <span>Subtotal</span>
+            <div class="total price">₦ 10999</div>
+        </div>
+        <hr class="section-divider">
+        <form action="" method="post" class="flxcent">
+            <input type="hidden" name="total_price" value="10999">
+            <button type="submit" class="btn price">Checkout (₦ 10999) </button>
+        </form>
+    </div>
+</body>
+
+{% endblock %}

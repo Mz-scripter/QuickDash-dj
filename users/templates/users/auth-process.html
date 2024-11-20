@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <style>
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("{% static 'images/bg-food.jpg' %}"), #0077C0;
+            background-position: right;
+            background-size: cover  ;
+        }
+    </style>
+    <title>
+        {% if page == 'reset-request' %}
+            Join QuickDash | Request Reset
+        {% elif page == 'reset-token' %}
+            Join QuickDash | Reset Password
+        {% elif page == 'verify-email' %}
+            QuickDash | Verify Email
+        {% endif %}
+    </title>
+</head>
+
+<body class="flxcent">
+    <div class="form-container">
+        {% if page == 'reset-request' %}
+
+        <h2 class="title">Request Reset</h2>
+        <form action="" method="post" class="flx">
+            {% csrf_token %}
+            <div class="input-field">
+                <input id="email" name="email" required="" type="email" value="">
+                <label for="email">Email</label>
+            </div>
+            <button type="submit" onclick="alert(`A link was sent to your email. Click it to reset password.`);">REQUEST RESET</button>
+        </form>
+        {% elif page == 'reset-token' %}
+
+        <h2 class="title">Request Password</h2>
+        <form action="" method="post" class="flx">
+            <div class="input-field">
+                <input id="password" maxlength="20" minlength="8" name="password" required="" type="password" value="">
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field">
+                <input id="confirm-password" maxlength="20" minlength="8" name="confirm-password" required="" type="password" value="">
+                <label for="confirm-password">Confirm Password</label>
+            </div>
+            <button type="submit">RESET PASSWORD</button>
+        </form>
+
+        {% elif page == 'verify-email' %}
+
+        <h2 class="title">Enter Verification Code</h2>
+        <form action="" method="post" class="flx">
+            <div class="input-field">
+                <input id="code" name="code" required="" type="text" value="">
+                <label for="code">Verification Code</label>
+            </div>
+            <button type="submit" style="margin-top: 15px;">SUBMIT</button>
+        </form>
+
+        {% endif %}
+    </div>    
+</body>
