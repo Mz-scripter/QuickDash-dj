@@ -1,0 +1,25 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <head>
+        <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+        <title>QuickDash | Help & FAQ's</title>
+    </head>
+
+    <body class="flxcent">
+        <form action="" method="POST" class="contact-form flxcent">
+            <input type="text" name="name" placeholder="Name" class="contact-input" required>
+            <input type="email" name="email" placeholder="Email" class="contact-input" required>
+            <textarea name="message" placeholder="Message" class="contact-input" required rows="5"></textarea>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        <div class="contact-img-container">
+            <img src="{% static 'images/help-bg.jpg' %}" class="contact-img" alt="Background Image">
+        </div>
+    </body>
+    
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <!-- Intro -->
+    <div class="hero">
+        <img src="{% static 'images/menu-hero.jpg' %}" alt="" class="hero-img">
+        <h1 class="flxcent">Craving something delicious? You're in the right place.</h1>
+    </div>
+    <!-- End of Intro -->
+
+    <!-- Featured Dishes Section -->
+    <section id="featured-dishes">
+        <div class="restaurant-dishes">
+            <div class="dish-item">
+                <div class="top-dish-section">  
+                    <img src="https://c0.wallpaperflare.com/preview/917/690/572/drink-juice-beverage-milk.jpg" alt="" class="dish-img">
+
+             </div>
+                <div class="bottom-dish-section flx">
+                    <div class="name-rating-section flx">
+                        <span class="dish-name">Chocolate Icecream</span>
+                        <span class="dish-rating flxcent">
+                            <span class="dish-rate">4.5</span>
+                            <span class="star-emoji">&#9733;</span>
+                        </span>
+                    </div>
+                    <div class="delivery-time-section flx">
+                        <span class="time-icon-container flxcent"> 
+                            <img src="{% static 'images/time.svg' %}" alt="" class="time-icon">
+                        </span>
+                        <span class="time-duration">
+                            20-30 minutes
+                        </span>
+                    </div>
+                    <div class="add-cart">
+                        <a href="">
+                            <img src="{% static 'images/plus.svg' %}" alt="" class="add-cart-icon">
+                        </a>
+                        <span class="hover-text">Add to Cart</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+   <!-- End of Featured Dishes Section -->
+
+{% endblock %}

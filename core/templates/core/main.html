@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'css/card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/featured-dishes.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button.css' %}">
+    
+    <title>Convenience Delivered, Every Time | QuickDash</title>
+</head>
+<body>
+     <!-- Header Section -->
+     <header class="flx">
+        <div class="left-section flx">
+            <a href="{% url 'home' %}">
+                <div class="logo-container">
+                    <img src="{% static 'images/logo.svg' %}" alt="" class="logo">
+                </div>
+                <div class="name">QuickDash</div>
+            </a>
+            
+        </div>
+
+        <div class="right-section flxcent">
+            <form action="" method="post" class="search-form flx">
+                <div class="search flxcent">
+                    <span class="search-icon-container flxcent">
+                        
+                        <button><img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon"></button>
+                    </span>
+                    <input type="text" id="search-bar" class="search-bar" name="search" placeholder="Search QuickDash" >
+                    <!-- Autocomplete Suggestions -->
+                     <div id="suggestions"></div>
+                </div>
+                <button type="submit" class="btn">Search</button>
+            </form>
+            <div class="profile-cart-container flxcent">
+                <div class="cart-container flxcent">
+                    <a href="{% url 'cart' %}">
+                        <img src="{% static 'images/cart-2.svg' %}" alt="" class="cart">
+                    </a>
+                    <span class="numc flxcent">3</span>
+                </div>
+                    <div class="profile-container flxcent">
+                        <a href="{% url 'profile' %}">
+                            <img src="{% static 'images/profile-circle.svg' %}" alt="" class="profile">
+                        </a>
+                    </div>                
+            </div>
+        </div>
+       
+
+    </header>
+    <!-- End of Header Section -->
+
+    <!-- Navbar for Smaller screens -->
+    <nav id="navbar">
+        <a href="{% url 'home' %}" class="nav-link">
+            <img src="{% static 'images/home-icon.svg' %}" alt="" class="nav-icon nav-home">
+            <span class="nav-text">HOME</span>            
+        </a>
+        <a href="{% url 'cart' %}" class="nav-link nav-cart">
+            <img src="{% static 'images/cart-s.svg' %}" alt="" class="nav-icon">
+            <span class="numc flxcent">3</span>
+            <span class="nav-text">CART</span>
+        </a>
+        <a href="{% url 'contact' %}" class="nav-link">
+            <img src="{% static 'images/message.svg' %}" alt="" class="nav-icon nav-help">
+            <span class="nav-text">HELP</span>
+        </a>
+        <a href="{% url 'profile' %}" class="nav-link">
+            <img src="{% static 'images/profile-circle.svg' %}" alt="" class="nav-icon nav-profile">
+            <span class="nav-text">PROFILE</span>
+        </a>
+        
+     </nav>
+    <!-- End of Navbar for Smaller screens -->
+
+    <!-- Help Icon on Larger Screens -->
+    <div class="help-icon-container">
+        <a href="{% url 'contact' %}">
+            <img src="{% static 'images/help.svg' %}" alt="" class="help-icon">
+        </a>
+      </div>
+      <!-- End of Help Icon on Larger Screens -->
+    
+
+      {% block content %}
+
+      {% endblock %}
+
+      
+</body>
+<script>
+    // function autocompleteSearch() {
+    //     var searchInput = document.getElementById("search-bar").value
+    //     // If the input is empty, hide suggestions
+    //     if (searchInput.length === 0) {
+    //         document.getElementById("suggestions").innerHTML = "";
+    //         return;
+    //     }
+
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open("GET", "/autocomplete?query=" + searchInput, true);
+    //     xhr.onreadystatechange = function () {
+    //         if (xhr.readyState === 4 && xhr.status === 200) {
+    //             var suggestions = JSON.parse(xhr.responseText);
+    //             var suggestionBox = document.getElementById("suggestions");
+    //             suggestionBox.innerHTML = "";
+
+    //             suggestions.forEach(function(suggestion) {
+    //                 var suggestionItem = document.createElement("div");
+    //                 suggestionItem.innerHTML = suggestion;
+    //                 suggestionItem.onclick = function () {
+    //                     document.getElementById("search-bar").value = suggestion;
+    //                     suggestionBox.innerHTML = "";
+    //                 };
+    //                 suggestionBox.appendChild(suggestionItem);
+    //             });
+    //         }
+    //     };
+    //     xhr.send();
+    // }
+  </script>
+</html>

@@ -1,0 +1,66 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <style>
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("{% static 'images/profile-bg.jpg' %}");
+            background-position: right;
+            background-size: cover;
+            /* background-repeat: no-repeat; */
+        }
+    </style>
+    <title>QuickDash | Profile</title>
+</head>
+
+<body class="flxcent">
+    <div class="account-details flx">
+        <form class="profile-form" action="">
+            <div class="links flx">
+                <a href="{% url 'profile' %}" class="link account flxcent">
+                    <img src="{% static 'images/account-head.svg' %}" alt="" class="link-icon">
+                    My Account
+                </a>
+                <a href="" class="link orders flxcent">
+                    <img src="{% static 'images/past-orders.svg' %}" alt="" class="link-icon">
+                    Past Orders
+                </a>
+                <a href="{% url 'edit-profile' %}" class="link edit flxcent">
+                    <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
+                    Edit
+                </a>
+            </div>
+            <div class="profile-det">
+                <label for="fullname">Full Name</label>
+                <input class="profile-input" type="text" name="fullname" id="fullname" value="Muheez Adeko Oluseun" readonly>
+            </div>
+
+            <div class="profile-det">
+                <label for="email">Email</label>
+                <input class="profile-input" type="text" name="email" id="email" value="mzscripterx5@gmail.com" readonly>
+            </div>
+
+            <div class="profile-det">
+                <label for="phone">Phone Number</label>
+                <input class="profile-input" type="text" name="phone" id="phone" value="+2349132135506" readonly>
+            </div>
+
+            <div class="profile-det">
+                <label for="address">Address</label>
+                <input class="profile-input" type="text" name="address" id="address" value="FUTA NORTH GATE, NEW HOSTEL" readonly>
+            </div>
+
+        </form>
+        <a href="" class="btn">Logout</a>
+    </div>
+</body>
+
+{% endblock %}
