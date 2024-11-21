@@ -14,16 +14,18 @@
     <!-- Featured Dishes Section -->
     <section id="featured-dishes">
         <div class="restaurant-dishes">
+            <!-- Dish Card Item -->
+             {% for item in items %}
             <div class="dish-item">
                 <div class="top-dish-section">  
-                    <img src="https://c0.wallpaperflare.com/preview/917/690/572/drink-juice-beverage-milk.jpg" alt="" class="dish-img">
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="dish-img">
 
              </div>
                 <div class="bottom-dish-section flx">
                     <div class="name-rating-section flx">
-                        <span class="dish-name">Chocolate Icecream</span>
+                        <span class="dish-name">{{ item.name }}</span>
                         <span class="dish-rating flxcent">
-                            <span class="dish-rate">4.5</span>
+                            <span class="dish-rate">{{ item.rating }}</span>
                             <span class="star-emoji">&#9733;</span>
                         </span>
                     </div>
@@ -31,7 +33,7 @@
                         <span class="time-icon-container flxcent"> 
                             <img src="{% static 'images/time.svg' %}" alt="" class="time-icon">
                         </span>
-                        <span class="time-duration">
+                         <span class="time-duration">
                             20-30 minutes
                         </span>
                     </div>
@@ -44,6 +46,9 @@
                 </div>
                 
             </div>
+            <!-- End of Dish Card Item -->
+             {% endfor %}
+
         </div>
     </section>
    <!-- End of Featured Dishes Section -->
