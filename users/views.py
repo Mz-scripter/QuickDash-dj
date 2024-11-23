@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from .models import Profile
+from django.core.mail import send_mail
 
 
 def loginPage(request):
@@ -56,24 +57,46 @@ def registerPage(request):
             user.username = form.cleaned_data['email']
             user.save()
 
-            Profile.objects.create(
+            profile = Profile.objects.create(
                 user=user,
                 fullname=form.cleaned_data.get('fullname'),
                 address=form.cleaned_data.get('address'),
                 phone_number=form.cleaned_data.get('phone_number'),
             )
 
-            login(request, user)
-            return redirect('home')
+            verification_url = request.build_absolute_uri(f"/verify/{profile.verification_code}/")
+            send_mail(
+                'Verify Your Email Address',
+                f'Click the link below to verify your email address: \n\n {verification_url}',
+                'mzscripterx5@gmail.com',
+                [user.email],
+                fail_silently=False,
+            )
+            messages.success(request, 'Verification email sent! Please check your inbox.')
+            return redirect('verify')
         else: 
             print('Error')
+            messages.error(request, 'Error occured during registration.')
     return render(request, 'users/register.html', context)
 
-def verifyEmailPage(request):
+def verifyEmailPage(request, code):
     page = 'verify-email'
-    
     context = {'page': page}
+    
+    try:
+        profile = get_object_or_404(Profile, verification_code=code)
+        if profile.is_verified == True:
+            messages.info(request, 'Your email is already verified.')
+        else:
+            profile.is_verified = True
+            profile.save()
+            messages.success(request, 'Email verified successfully!')
+        return redirect('home')
+    except Exception as e:
+        messages.error(request, 'Invalid verification link.')
+        return redirect('register')
     return render(request, 'users/auth-process.html', context)
+    
 
 def resetRequestPage(request):
     page = 'reset-request'
