@@ -27,8 +27,8 @@ def loginPage(request):
             user = User.objects.get(email=email)
         
         except User.DoesNotExist:
-            messages.error(request, 'User does not exist.')
-            return redirect('login')
+            messages.error(request, 'Email does not exist. Please register.')
+            return redirect('register')
         
         user = authenticate(request, username=user.username, password=password)
 
@@ -53,7 +53,7 @@ def registerPage(request):
 
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
+        if form.is_valid():            
             user = form.save(commit=False)
             user.username = form.cleaned_data['email']
             user.save()
@@ -78,8 +78,13 @@ def registerPage(request):
             )
             messages.success(request, 'Verification email sent! Please check your inbox.')
             return redirect('register')
-        else: 
-            print('Error')
+        else:
+            # Check for duplicate email error
+            if 'email' in form.errors.as_data():
+                for error in form.errors['email']:
+                    if 'already registered' in error:
+                        messages.info(request, 'An account with this email already exists. Please login.')
+                        return redirect('login')
             messages.error(request, 'Error occured during registration.')
     return render(request, 'users/register.html', context)
 
