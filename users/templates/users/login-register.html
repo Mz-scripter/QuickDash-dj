@@ -41,6 +41,11 @@
             <div class="forget flxcent">
                 <a href="{% url 'reset-request' %}">Forget Password?</a>
             </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: white;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <button type="submit" style="margin-top: 15px;">LOGIN</button>
             <div class="login flxcent">
                 <p>Don't have an account?</p><a href="{% url 'register' %}">Register</a>
