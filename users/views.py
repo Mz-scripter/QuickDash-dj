@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from .models import Profile
 from django.core.mail import send_mail
+from django.urls import reverse
 
 
 def loginPage(request):
@@ -64,7 +65,10 @@ def registerPage(request):
                 phone_number=form.cleaned_data.get('phone_number'),
             )
 
-            verification_url = request.build_absolute_uri(f"/verify/{profile.verification_code}/")
+            verification_code = profile.verification_code
+
+            verification_url = request.build_absolute_uri(reverse('verify', args=[verification_code]))
+
             send_mail(
                 'Verify Your Email Address',
                 f'Click the link below to verify your email address: \n\n {verification_url}',
@@ -73,30 +77,28 @@ def registerPage(request):
                 fail_silently=False,
             )
             messages.success(request, 'Verification email sent! Please check your inbox.')
-            return redirect('verify')
+            return redirect('register')
         else: 
             print('Error')
             messages.error(request, 'Error occured during registration.')
     return render(request, 'users/register.html', context)
 
-def verifyEmailPage(request, code):
-    page = 'verify-email'
-    context = {'page': page}
-    
+def verifyEmail(request, code):  
     try:
         profile = get_object_or_404(Profile, verification_code=code)
         if profile.is_verified == True:
             messages.info(request, 'Your email is already verified.')
+            return redirect('login')
         else:
             profile.is_verified = True
             profile.save()
-            messages.success(request, 'Email verified successfully!')
-        return redirect('home')
+            return redirect('verify-email')
     except Exception as e:
         messages.error(request, 'Invalid verification link.')
         return redirect('register')
-    return render(request, 'users/auth-process.html', context)
-    
+   
+def verifyEmailPage(request):
+    return render(request, 'users/verify.html')
 
 def resetRequestPage(request):
     page = 'reset-request'
