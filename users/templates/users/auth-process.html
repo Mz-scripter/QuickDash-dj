@@ -38,24 +38,38 @@
         <h2 class="title">Request Reset</h2>
         <form action="" method="post" class="flx">
             {% csrf_token %}
+            {% for field in form %}
             <div class="input-field">
-                <input id="email" name="email" required="" type="email" value="">
-                <label for="email">Email</label>
+                {{ field }}
+                <!-- <input id="email" name="email" required="" type="email" value=""> -->
+                <label for="{{ field.label }}">{{ field.label }}</label>
             </div>
+            {% endfor %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FAFAFA;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <button type="submit" onclick="alert(`A link was sent to your email. Click it to reset password.`);">REQUEST RESET</button>
         </form>
         {% elif page == 'reset-token' %}
 
         <h2 class="title">Request Password</h2>
         <form action="" method="post" class="flx">
+            {% csrf_token %}
             <div class="input-field">
                 <input id="password" maxlength="20" minlength="8" name="password" required="" type="password" value="">
                 <label for="password">Password</label>
             </div>
             <div class="input-field">
-                <input id="confirm-password" maxlength="20" minlength="8" name="confirm-password" required="" type="password" value="">
+                <input id="confirm-password" maxlength="20" minlength="8" name="confirm_password" required="" type="password" value="">
                 <label for="confirm-password">Confirm Password</label>
             </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FAFAFA;">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
             <button type="submit">RESET PASSWORD</button>
         </form>
 
