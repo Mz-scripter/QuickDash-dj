@@ -171,8 +171,31 @@ def password_reset_confirm(request, user_id, token):
         messages.error(request, 'Invalid user.')
         return redirect('password_reset_request')
 
+@login_required(login_url='/login')
 def profilePage(request):
-    return render(request, 'users/profile.html')
+    profile = get_object_or_404(Profile, user=request.user)
+    context = {
+        'fullname': profile.fullname,
+        'email': request.user.email,
+        'phone_number': profile.phone_number,
+        'address': profile.address,
+    }
+    return render(request, 'users/profile.html', context)
 
+
+@login_required(login_url='/login')
 def editProfilePage(request):
-    return render(request, 'users/edit-profile.html')
+    profile = get_object_or_404(Profile, user=request.user)
+    if request.method == 'POST':
+        profile.fullname = request.POST.get('fullname')
+        profile.phone_number = request.POST.get('phone_number')
+        profile.address = request.POST.get('address')
+        profile.save()
+        return redirect('profile')
+    else:
+        context = {
+            'fullname': profile.fullname,
+            'phone_number': profile.phone_number,
+            'address': profile.address
+        }
+    return render(request, 'users/edit-profile.html', context)
