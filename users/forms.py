@@ -34,3 +34,8 @@ class CustomUserCreationForm(UserCreationForm):
                 address = self.cleaned_data.get('address'),
             )
         return user
+
+
+class PasswordResetForm(forms.Form):
+    email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    

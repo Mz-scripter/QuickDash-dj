@@ -6,11 +6,21 @@ from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView
 from .forms import CustomUserCreationForm
-from django.contrib.auth.models import User
+from .models import User
 from django.views.decorators.csrf import csrf_protect
 from .models import Profile
 from django.core.mail import send_mail
 from django.urls import reverse
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from .forms import PasswordResetForm
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth import get_user_model
+
+
+
+
+token_generator = PasswordResetTokenGenerator()
+
 
 
 def loginPage(request):
@@ -105,15 +115,61 @@ def verifyEmail(request, code):
 def verifyEmailPage(request):
     return render(request, 'users/verify.html')
 
-def resetRequestPage(request):
-    page = 'reset-request'
-    context = {'page': page}
-    return render(request, 'users/auth-process.html', context)
+def password_reset_request(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            try:
+                user = User.objects.get(email=email)
+                token = token_generator.make_token(user)
+                reset_url = request.build_absolute_uri(
+                    reverse('password_reset_confirm', args=[user.pk, token])
+                )
 
-def resetTokenPage(request):
+                # Send email
+                send_mail(
+                    'Reset Your Password',
+                    f'Click the link to reset your password: {reset_url}',
+                    'mzscripterx5@gmail.com',  # Replace with your sender email
+                    [email],
+                )
+                messages.success(request, 'Password reset link has been sent to your email.')
+                return redirect('password_reset_request')
+            except User.DoesNotExist as e:
+                messages.error(request, f'Email address not found. Error: {str(e)}')
+                return redirect('password_reset_request')
+        else:
+            messages.error(request, 'Invalid email format.')
+    else:
+        form = PasswordResetForm()
+    return render(request, 'users/auth-process.html', {'page': 'reset-request', 'form': PasswordResetForm})
+
+
+def password_reset_confirm(request, user_id, token):
     page = 'reset-token'
     context = {'page': page}
-    return render(request, 'users/auth-process.html', context)
+    User = get_user_model()
+    try:
+        user = User.objects.get(pk=user_id)
+        if not token_generator.check_token(user, token):
+            messages.error(request, 'Invalid or expired token.')
+            return redirect('password_reset_request')
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('password')
+            confirm_password = request.POST.get('confirm_password')
+            if new_password == confirm_password:
+                user.password = make_password(new_password)
+                user.save()
+                messages.success(request, 'Password updated successfully.')
+                return redirect('login')
+            else:
+                messages.error(request, 'Passwords do not match.')
+        return render(request, 'users/auth-process.html', context)
+    except User.DoesNotExist():
+        messages.error(request, 'Invalid user.')
+        return redirect('password_reset_request')
 
 def profilePage(request):
     return render(request, 'users/profile.html')

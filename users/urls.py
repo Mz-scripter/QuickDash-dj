@@ -9,8 +9,8 @@ urlpatterns = [
     path('verify/<uuid:code>/', views.verifyEmail, name='verify'),
     path('verify-email/', views.verifyEmailPage, name='verify-email'),
 
-    path('reset-request/', views.resetRequestPage, name='reset-request'),
-    path('reset-token/', views.resetTokenPage, name='reset-token'),
+    path('password-reset/', views.password_reset_request, name='password_reset_request'),
+    path('password-reset/<int:user_id>/<str:token>', views.password_reset_confirm, name='password_reset_confirm'),
 
     path('profile/', views.profilePage, name='profile'),
     path('edit-profile', views.editProfilePage, name='edit-profile'),

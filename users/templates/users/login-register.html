@@ -39,7 +39,7 @@
                 <label for="password">Password</label>
             </div>
             <div class="forget flxcent">
-                <a href="{% url 'reset-request' %}">Forget Password?</a>
+                <a href="{% url 'password_reset_request' %}">Forget Password?</a>
             </div>
             {% if messages %}
                 {% for message in messages %}
