@@ -10,6 +10,7 @@ class Profile(models.Model):
     address = models.CharField(max_length=150, blank=True, null=True)
     verification_code = models.UUIDField(default=uuid.uuid4, editable=False)
     is_verified = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True) # Track when the profile was created
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
