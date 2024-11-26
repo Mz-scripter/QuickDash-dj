@@ -48,7 +48,9 @@
                     <a href="{% url 'cart' %}">
                         <img src="{% static 'images/cart-2.svg' %}" alt="" class="cart">
                     </a>
-                    <span class="numc flxcent">3</span>
+                    {% if request.user.is_authenticated %}
+                    <span class="numc flxcent">{{ total_items }}</span>
+                    {% endif %}
                 </div>
                     <div class="profile-container flxcent">
                         <a href="{% url 'profile' %}">

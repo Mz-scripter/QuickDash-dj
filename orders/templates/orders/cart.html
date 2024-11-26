@@ -23,7 +23,7 @@
                     <img src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" class="prod-img">
                     <div class="prod-title flx">
                         <div class="prod-name">{{ cart_item.item.name }}</div>
-                        <div class="seller"><span class="seller-name">Seller: </span> Lorem, ipsum.</div>
+                        <div class="seller"><span class="seller-name">Seller: </span>{{ cart_item.item.restaurant }}</div>
                         <div class="price small">₦ {{ cart_item.get_total_price }}</div>
                     </div>
                 </div>
