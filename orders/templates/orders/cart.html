@@ -10,27 +10,29 @@
 </head>
 
 <body class="flx">
+    {% if cart_items %}
     <div class="cart-item-container flx">
         <h2>Cart (3)</h2>
         <hr class="section-divider">
 
+        {% for cart_item in cart_items %}
         <!-- Cart item -->
         <div class="cart-item flx">
             <div class="top-section flx">
                 <div class="prod-details flx">
-                    <img src="https://c4.wallpaperflare.com/wallpaper/503/768/942/food-chocolate-cake-cake-wallpaper-preview.jpg" alt="" class="prod-img">
+                    <img src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" class="prod-img">
                     <div class="prod-title flx">
-                        <div class="prod-name">Strawberry and Chocolate Cake</div>
+                        <div class="prod-name">{{ cart_item.item.name }}</div>
                         <div class="seller"><span class="seller-name">Seller: </span> Lorem, ipsum.</div>
-                        <div class="price small">₦ 10999</div>
+                        <div class="price small">₦ {{ cart_item.get_total_price }}</div>
                     </div>
                 </div>
-                <div class="price big">₦ 10999</div>
+                <div class="price big">₦ {{ cart_item.get_total_price }}</div>
             </div>
             <div class="bottom-section flx">
                 <div class="remove">
                     <a href="" class="btn">
-                        <img src="{ static 'images/remove.svg' %}" alt="" class="rem-icon icon">
+                        <img src="{% static 'images/remove.svg' %}" alt="" class="rem-icon icon">
                         Remove
                     </a>
                 </div>
@@ -43,20 +45,24 @@
         </div>
         <hr class="section-divider">
         <!-- End of Cart item -->
+        {% endfor %}
     </div>
     <div class="summary-container flx">
         <h2>Cart Summary</h2>
         <hr class="section-divider">
         <div class="subtotal flx">
             <span>Subtotal</span>
-            <div class="total price">₦ 10999</div>
+            <div class="total price">₦ {{ total_price }}</div>
         </div>
         <hr class="section-divider">
         <form action="" method="post" class="flxcent">
             <input type="hidden" name="total_price" value="10999">
-            <button type="submit" class="btn price">Checkout (₦ 10999) </button>
+            <button type="submit" class="btn price">Checkout (₦ {{ total_price }}) </button>
         </form>
     </div>
+    {% else %}
+    <h2>Your cart is empty.</h2>
+    {% endif %}
 </body>
 
 {% endblock %}

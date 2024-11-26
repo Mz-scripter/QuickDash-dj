@@ -38,7 +38,7 @@
                         </span>
                     </div>
                     <div class="add-cart">
-                        <a href="">
+                        <a href="{% url 'add_to_cart' item.id %}">
                             <img src="{% static 'images/plus.svg' %}" alt="" class="add-cart-icon">
                         </a>
                         <span class="hover-text">Add to Cart</span>
