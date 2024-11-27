@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LoginView
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileUpdateForm
 from .models import User
 from django.views.decorators.csrf import csrf_protect
 from .models import Profile
@@ -179,23 +179,19 @@ def profilePage(request):
         'email': request.user.email,
         'phone_number': profile.phone_number,
         'address': profile.address,
+        'is_seller': profile.is_seller,
     }
     return render(request, 'users/profile.html', context)
 
-
-@login_required(login_url='/login')
-def editProfilePage(request):
+@login_required(login_url='login')
+def update_profile(request):
     profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
-        profile.fullname = request.POST.get('fullname')
-        profile.phone_number = request.POST.get('phone_number')
-        profile.address = request.POST.get('address')
-        profile.save()
-        return redirect('profile')
+        form = ProfileUpdateForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updates successfully.")
+            return redirect('profile')
     else:
-        context = {
-            'fullname': profile.fullname,
-            'phone_number': profile.phone_number,
-            'address': profile.address
-        }
-    return render(request, 'users/edit-profile.html', context)
+        form = ProfileUpdateForm(instance=profile)
+    return render(request, 'users/update-profile.html', {'form': form})

@@ -26,7 +26,7 @@
 
 <body class="flxcent">
     <div class="account-details flx">
-        <form class="profile-form" action="" method="post">
+        <form class="profile-form" action="" method="POST">
             {% csrf_token %}
             <div class="links flx">
                 <a href="{% url 'profile' %}" class="link account flxcent">
@@ -37,28 +37,35 @@
                     <img src="{% static 'images/past-orders.svg' %}" alt="" class="link-icon">
                     Past Orders
                 </a>
-                <a href="" class="link edit flxcent">
+                <a href="{% url 'update_profile' %}" class="link edit flxcent">
                     <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
-                    Edit
+                    Update Profile
                 </a>
             </div>
+            {{ form.non_field_errors }}
             <div class="profile-det">
-                <label for="fullname">Full Name</label>
-                <input class="profile-input" type="text" name="fullname" id="fullname" value="{{ fullname }}">
+                {{ form.fullname.label_tag }}
+                {{ form.fullname }}
             </div>
 
             <div class="profile-det">
-                <label for="phone">Phone Number</label>
-                <input class="profile-input" type="text" name="phone_number" id="phone" value="{{ phone_number }}">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
             </div>
 
             <div class="profile-det">
-                <label for="address">Address</label>
-                <input class="profile-input" type="text" name="address" id="address" value="{{ address }}">
+                {{ form.address.label_tag }}
+                {{ form.address }}
             </div>
+
+            <div class="profile-det">
+                {{ form.is_seller }}
+                <label for="id_is_seller" class="form-check-label">{{ form.is_seller.label }}</label>
+                <small class="form-text text-muted">{{ form.is_seller.help_text }}</small>
+            </div>
+
             <button class="btn" type="submit">Update Profile</button>
         </form>
-        <a href="{% url 'logout' %}" class="btn">Logout</a>
     </div>
 </body>
 

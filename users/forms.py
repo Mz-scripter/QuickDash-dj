@@ -38,3 +38,24 @@ class CustomUserCreationForm(UserCreationForm):
 
 class PasswordResetForm(forms.Form):
     email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['fullname', 'phone_number', 'address', 'is_seller']
+        labels = {
+            'fullname': 'Full Name',
+            'phone_number': 'Phone Number',
+            'address': 'Address',
+            'is_seller': 'Apply to be a seller',
+        }
+        help_texts = {
+            'is_seller': 'Check this box if you would like to register a seller on the platform.'
+        }
+        widgets = {
+            'fullname': forms.TextInput(attrs={'class': 'profile-input'}),
+            'phone_number': forms.TextInput(attrs={'class': 'profile-input'}),
+            'address': forms.TextInput(attrs={'class': 'profile-input'}),
+            'is_seller': forms.CheckboxInput(attrs={'class': 'form-check-input'},)
+        }

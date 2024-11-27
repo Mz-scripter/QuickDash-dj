@@ -3,6 +3,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Item, CartItem
 from django.contrib import messages
 from .forms import ItemForm
+from users.models import Profile
+from django.http import HttpResponseForbidden
+
 
 
 @login_required(login_url='login')
@@ -47,13 +50,17 @@ def decrease_quantity(request, item_id):
             cart_item.delete()
     return redirect('cart')
 
+login_required(login_url='login')
 def add_item(request):
+    profile = get_object_or_404(Profile, user=request.user)
+    if not profile.is_seller:
+        return HttpResponseForbidden("You must be a seller to access this page.")
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Item added successfully!")
-            return redirect('home')
+            return redirect('profile')
         else:
             messages.error(request, "Error adding item. Please check the form.")
     else:
