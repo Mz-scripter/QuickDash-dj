@@ -33,10 +33,16 @@
                     <img src="{% static 'images/past-orders.svg' %}" alt="" class="link-icon">
                     Past Orders
                 </a>
-                <a href="{% url 'edit-profile' %}" class="link edit flxcent">
+                <a href="{% url 'update_profile' %}" class="link edit flxcent">
                     <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
-                    Edit
+                    Update Profile
                 </a>
+                {% if is_seller %}
+                <a href="{% url 'add_item' %}" class="link edit flxcent">
+                    <img src="{% static 'images/add-icon.svg' %}" alt="" class="link-icon">
+                    Add Item
+                </a>
+                {% endif %}
             </div>
             <div class="profile-det">
                 <label for="fullname">Full Name</label>
@@ -57,6 +63,13 @@
                 <label for="address">Address</label>
                 <input class="profile-input" type="text" name="address" id="address" value="{{ address }}" readonly>
             </div>
+
+            {% if is_seller %}
+            <div class="profile-det">
+                <input type="checkbox" name="" id="seller" checked disabled style="display: inline; margin-right: 10px;">
+                <label for="seller" style="display: inline;">You're a seller</label>
+            </div>
+            {% endif %}
 
         </form>
         <a href="{% url 'logout' %}" class="btn">Logout</a>
