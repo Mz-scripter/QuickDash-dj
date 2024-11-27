@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Item, CartItem
+from django.contrib import messages
+from .forms import ItemForm
 
 
 @login_required(login_url='login')
@@ -44,3 +46,16 @@ def decrease_quantity(request, item_id):
         else:
             cart_item.delete()
     return redirect('cart')
+
+def add_item(request):
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Item added successfully!")
+            return redirect('home')
+        else:
+            messages.error(request, "Error adding item. Please check the form.")
+    else:
+        form = ItemForm()
+    return render(request, 'orders/add-item.html', {'form': form})
