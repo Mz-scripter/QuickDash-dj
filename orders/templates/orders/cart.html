@@ -31,15 +31,15 @@
             </div>
             <div class="bottom-section flx">
                 <div class="remove">
-                    <a href="" class="btn">
+                    <a href="{% url 'remove_from_cart' cart_item.id %}" class="btn">
                         <img src="{% static 'images/remove.svg' %}" alt="" class="rem-icon icon">
                         Remove
                     </a>
                 </div>
                 <div class="add-sub flx">
-                    <a href="" class="btn">-</a>
+                    <a href="{% url 'decrease_quantity' cart_item.id %}" class="btn">-</a>
                     <input type="text" class="quantity" value="{{ cart_item.quantity }}" disabled>
-                    <a href="" class="btn">+</a>
+                    <a href="{% url 'increase_quantity' cart_item.id %}" class="btn">+</a>
                 </div>
             </div>
         </div>

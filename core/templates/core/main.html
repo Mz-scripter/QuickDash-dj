@@ -72,7 +72,7 @@
         </a>
         <a href="{% url 'cart' %}" class="nav-link nav-cart">
             <img src="{% static 'images/cart-s.svg' %}" alt="" class="nav-icon">
-            <span class="numc flxcent">3</span>
+            <span class="numc flxcent">{{ total_items }}</span>
             <span class="nav-text">CART</span>
         </a>
         <a href="{% url 'contact' %}" class="nav-link">
