@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Item, CartItem
+from .models import Item, CartItem, WishListItem
 from django.contrib import messages
 from .forms import ItemForm, RestaurantForm
 from users.models import Profile
@@ -85,3 +85,21 @@ def add_restaurant(request):
     else:
         form = RestaurantForm()
     return render(request, 'orders/add-restaurant.html', {'form': form})
+
+@login_required(login_url='login')
+def toggle_wishlist(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    wishlist_item, created = WishListItem.objects.get_or_create(user=request.user, item=item)
+
+    if created:
+        messages.success(request, f"{item.name} added to your wish list!")
+    else:
+        wishlist_item.delete()
+        messages.info(request, f"{item.name} removed from your wish list.")
+    
+    return redirect(request.META.get('HTTP_REFERER', 'home'))
+
+@login_required(login_url='login')
+def wishlist(request):
+    wishlist_items = WishListItem.objects.filter(user=request.user).select_related('item')
+    return render(request, 'orders/wishlist.html', {'wishlist_items': wishlist_items})

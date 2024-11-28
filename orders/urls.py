@@ -12,5 +12,8 @@ urlpatterns = [
 
     path('add-item/', views.add_item, name='add_item'),
 
-    path('add-restaurant', views.add_restaurant, name='add_restaurant'),
+    path('add-restaurant/', views.add_restaurant, name='add_restaurant'),
+
+    path('wishlist/', views.wishlist, name='wishlist'),
+    path('wishlist/toggle/<int:item_id>/', views.toggle_wishlist, name='toggle_wishlist'),
 ]

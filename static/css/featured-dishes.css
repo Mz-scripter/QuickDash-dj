@@ -23,22 +23,24 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-
-
 .dish-item:active,
 .dish-item:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
+.add-wish-box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
 
-
-.add-cart-icon {
+.add-cart-icon,
+.wish-list-icon {
     width: 100%;
 }
 
-.add-cart {
-    justify-self: flex-end;
-    align-self: flex-end;
+.add-cart,
+.wish-list {
     width: 30px;
     position: relative;
     display: inline-block;
@@ -61,11 +63,13 @@
     font-size: 14px;
 }
 
-.add-cart:hover {
+.add-cart:hover,
+.wish-list:hover {
     opacity: 0.8;
 }
 
-.add-cart:hover .hover-text {
+.add-cart:hover .hover-text,
+.wish-list:hover .hover-text {
     visibility: visible;
     opacity: 1;
 }
