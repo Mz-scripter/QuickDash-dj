@@ -37,6 +37,10 @@
                     <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
                     Update Profile
                 </a>
+                <a href="{% url 'wishlist' %}" class="link edit flxcent">
+                    <img src="{% static 'images/favorite.svg' %}" alt="" class="link-icon">
+                    Wish List
+                </a>
                 {% if is_seller %}
                 <a href="{% url 'add_item' %}" class="link edit flxcent">
                     <img src="{% static 'images/add-icon.svg' %}" alt="" class="link-icon">

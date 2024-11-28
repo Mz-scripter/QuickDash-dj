@@ -38,3 +38,12 @@ class CartItem(models.Model):
     
     def get_total_price(self):
         return self.quantity * self.item.price
+
+
+class WishListItem(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    item = models.ForeignKey('Item', on_delete=models.CASCADE)
+    added_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user}'s favorite: {self.item.name}"

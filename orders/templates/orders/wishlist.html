@@ -1,0 +1,46 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<head>
+    <title>QuickDash |Wish List</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+
+<body class="flx">
+    <div class="cart-item-container flx">
+       <h2>Your Wish List</h2>
+       <hr class="section-divider">
+        {% for wishlist_item in wishlist_items %}
+        <!-- Cart item -->
+        <div class="cart-item flx">
+            <div class="top-section flx">
+                <div class="prod-details flx">
+                    <img src="{{ wishlist_item.item.image.url }}" alt="{{ wishlist_item.item.name }}" class="prod-img">
+                    <div class="prod-title flx">
+                        <div class="prod-name">{{ wishlist_item.item.name }}</div>
+                        <div class="seller"><span class="seller-name">Seller: </span>{{ wishlist_item.item.restaurant }}</div>
+                        <div class="price small">₦ {{ wishlist_item.item.price }}</div>
+                    </div>
+                </div>
+                <div class="price big">₦ {{ wishlist_item.item.price }}</div>
+            </div>
+            <div class="bottom-section flx">
+                <div class="remove">
+                    <a href="{% url 'toggle_wishlist' wishlist_item.item.id %}" class="btn">
+                        <img src="{% static 'images/remove.svg' %}" alt="" class="rem-icon icon">
+                        Remove
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr class="section-divider">
+        <!-- End of Cart item -->
+        {% endfor %}
+    </div>
+    
+</body>
+
+{% endblock %}
