@@ -1,0 +1,34 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+<head>
+    <title>QuickDash |Cart</title>
+    <link rel="stylesheet" href="{% static 'css/add-item.css' %}">
+</head>
+
+<div class="form-container">
+    <h2 class="mb-4">Add New Restaurant</h2>
+    <form action="" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div>
+            <label for="id_name">Restaurant Name</label>
+            {{ form.name }}
+        </div>
+
+        <div>
+            <label for="id_price">Restaurant Address(Recommended to Check Google Maps)</label>
+            {{ form.address }}
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #1D242B;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <button type="submit">Add New Restaurant</button>
+    </form>
+</div>
+{% endblock %}
