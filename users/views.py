@@ -180,6 +180,7 @@ def profilePage(request):
         'phone_number': profile.phone_number,
         'address': profile.address,
         'is_seller': profile.is_seller,
+        'allowed_emails': ['mzscripterx5@gmail.com', 'adekomuheez567@gmail.com']
     }
     return render(request, 'users/profile.html', context)
 

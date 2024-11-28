@@ -43,6 +43,12 @@
                     Add Item
                 </a>
                 {% endif %}
+                {% if request.user.email in allowed_emails %}
+                <a href="{% url 'add_restaurant' %}" class="link edit flxcent">
+                    <img src="{% static 'images/add-restaurant.svg' %}" alt="" class="link-icon">
+                    Add Restaurant
+                </a>
+                {% endif %}
             </div>
             <div class="profile-det">
                 <label for="fullname">Full Name</label>
