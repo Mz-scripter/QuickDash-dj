@@ -57,8 +57,11 @@ def add_item(request):
         return HttpResponseForbidden("You must be a seller to access this page.")
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
+
         if form.is_valid():
-            form.save()
+            item = form.save(commit=False)
+            item.user = request.user
+            item.save()
             messages.success(request, "Item added successfully!")
             return redirect('profile')
         else:
