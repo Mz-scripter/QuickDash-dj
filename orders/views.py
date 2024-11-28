@@ -69,6 +69,9 @@ def add_item(request):
 
 @login_required(login_url='login')
 def add_restaurant(request):
+    allowed_emails = ['mzscripterx5@gmail.com', 'adekomuheez567@gmail.com']
+    if request.user.email not in allowed_emails:
+        return HttpResponseForbidden("You don't have access this page.")
     if request.method == 'POST':
         form = RestaurantForm(request.POST)
         if form.is_valid():
