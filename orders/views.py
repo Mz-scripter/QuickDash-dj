@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Item, CartItem
 from django.contrib import messages
-from .forms import ItemForm
+from .forms import ItemForm, RestaurantForm
 from users.models import Profile
 from django.http import HttpResponseForbidden
 
@@ -66,3 +66,16 @@ def add_item(request):
     else:
         form = ItemForm()
     return render(request, 'orders/add-item.html', {'form': form})
+
+@login_required(login_url='login')
+def add_restaurant(request):
+    if request.method == 'POST':
+        form = RestaurantForm(request.POST)
+        if form.is_valid():
+            restaurant = form.save(commit=False)
+            restaurant.owner = request.user
+            restaurant.save()
+            return redirect('profile')
+    else:
+        form = RestaurantForm()
+    return render(request, 'orders/add-restaurant.html', {'form': form})
