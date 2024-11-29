@@ -41,8 +41,8 @@
                     <!-- Autocomplete Suggestions -->
                      <div id="suggestions"></div>
                      <!-- Restaurant Filter -->
-                      <div class="filter">
-                        <select name="restaurant" id="" class="restaurant">
+                      <!-- <div class="filter-container"> -->
+                        <select name="restaurant" id="" class="filter-select">
                             <option value="">All Restaurants</option>
                             {% for restaurant in restaurants %}
                             <option 
@@ -54,9 +54,9 @@
                           </select>
     
                           <!-- Price range filters -->
-                           <input type="number" name="min_price" placeholder="Min price" value="{{ min_price }}">
-                           <input type="number" name="max_price" placeholder="Max price" value="{{ max_price }}">
-                      </div>
+                           <!-- <input type="number" class="filter-input" name="min_price" placeholder="Min price" value="{{ min_price }}">
+                           <input type="number" class="filter-input" name="max_price" placeholder="Max price" value="{{ max_price }}"> -->
+                      <!-- </div> -->
                       
                 </div>
                 <button type="submit" class="btn">Search</button>

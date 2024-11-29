@@ -53,7 +53,7 @@ a {
 
 /* Right Section */
 .right-section {
-    width: 40%;
+    width: 50%;
 }
 
 .search-form {
@@ -95,6 +95,11 @@ a {
     flex: 1;
     outline: none;
     font-size: 16px;
+}
+
+.filter-select {
+    width: 120px;
+    margin-right: 1px;
 }
 
 /* Styles for autocomplete suggestions */
@@ -150,6 +155,9 @@ a {
 
     .profile-cart-container{
         justify-content: flex-end;
+        position: absolute;
+        right: 0;
+        
     }
 
     .profile {
@@ -193,6 +201,12 @@ a {
 
     header {
         height: 120px;
+    }
+
+    .filter-select {
+        position: absolute;
+        right: 0;
+        width: 100px;
     }
 
     #suggestions{
