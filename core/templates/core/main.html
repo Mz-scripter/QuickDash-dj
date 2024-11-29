@@ -31,13 +31,13 @@
         </div>
 
         <div class="right-section flxcent">
-            <form action="" method="post" class="search-form flx">
+            <form action="{% url 'home' %}" method="GET" class="search-form flx">
                 <div class="search flxcent">
                     <span class="search-icon-container flxcent">
                         
                         <button><img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon"></button>
                     </span>
-                    <input type="text" id="search-bar" class="search-bar" name="search" placeholder="Search QuickDash" >
+                    <input type="text" id="search-bar" class="search-bar" name="q" value="{{ query }}" placeholder="Search QuickDash" >
                     <!-- Autocomplete Suggestions -->
                      <div id="suggestions"></div>
                 </div>
