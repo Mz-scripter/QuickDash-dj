@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from orders.models import Item, CartItem, WishListItem, Restaurant
 from django.db.models import Sum, Q
+from django.core.paginator import Paginator
 
 def homePage(request):
     query = request.GET.get('q', '')
@@ -12,6 +13,10 @@ def homePage(request):
         Q(name__icontains=query) |
         Q(description__icontains=query)
     )
+
+    paginator = Paginator(items, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     if restaurant_filter:
         items = items.filter(restaurant__name=restaurant_filter)
@@ -40,6 +45,7 @@ def homePage(request):
         'restaurant_filter': restaurant_filter,
         'min_price': min_price,
         'max_price': max_price,
+        'page_obj': page_obj,
         }
     return render(request, 'core/index.html', context)
 

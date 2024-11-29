@@ -156,3 +156,45 @@
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
 }
+
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.page-link {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #0077c0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #0077c0;
+    color: white;
+}
+
+.page-link.current {
+    font-weight: bold;
+    background-color: #0077c0;
+    color: white;
+    pointer-events: none;
+}
+
+.page-link.disabled {
+    color: #999;
+    pointer-events: none;
+    background-color: #f3f3f3;
+}
