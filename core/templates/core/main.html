@@ -40,6 +40,24 @@
                     <input type="text" id="search-bar" class="search-bar" name="q" value="{{ query }}" placeholder="Search QuickDash" >
                     <!-- Autocomplete Suggestions -->
                      <div id="suggestions"></div>
+                     <!-- Restaurant Filter -->
+                      <div class="filter">
+                        <select name="restaurant" id="" class="restaurant">
+                            <option value="">All Restaurants</option>
+                            {% for restaurant in restaurants %}
+                            <option 
+                                value="{{ restaurant.name }}"
+                                {% if restaurant.name == restaurant_filter %}selected{% endif %}>
+                            {{ restaurant.name }}
+                            </option>
+                            {% endfor %}
+                          </select>
+    
+                          <!-- Price range filters -->
+                           <input type="number" name="min_price" placeholder="Min price" value="{{ min_price }}">
+                           <input type="number" name="max_price" placeholder="Max price" value="{{ max_price }}">
+                      </div>
+                      
                 </div>
                 <button type="submit" class="btn">Search</button>
             </form>
