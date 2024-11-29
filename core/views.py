@@ -14,7 +14,7 @@ def homePage(request):
         Q(description__icontains=query)
     )
 
-    paginator = Paginator(items, 3)
+    paginator = Paginator(items, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
