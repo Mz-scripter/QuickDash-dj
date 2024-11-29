@@ -119,6 +119,10 @@ label {
         border-radius: 10px;
     }
 
+    .account-details {
+        margin-bottom: 100px;
+    }
+
     .link {
         font-size: 13px;
     }
@@ -127,5 +131,13 @@ label {
     }
 }
 
+.links {
+    width: 85%;
+    justify-self: center;
+    align-self: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
 
 

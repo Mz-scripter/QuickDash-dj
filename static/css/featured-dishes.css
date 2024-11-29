@@ -159,15 +159,22 @@
 
 
 /* Pagination */
+.pagination-wrapper {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Improves scrolling on touch devices */
+    white-space: nowrap; /* Prevents links from wrapping to the next line */
+    margin-bottom: 50px;
+}
+
 .pagination {
-    display: flex;
-    justify-content: space-between;
+    display: flex; /* Keeps links in a single row */
+    justify-content: space-between; /* Aligns links to the start */
     align-items: center;
-    margin: 20px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
+    margin: 20px auto;
+    padding: 10px 5px;
+    gap: 5px; /* Adds spacing between links */
+    max-width: 1000px;
+    background-color: #e0e0e0;
 }
 
 .page-link {
@@ -179,6 +186,7 @@
     border-radius: 5px;
     background-color: white;
     transition: background-color 0.3s, color 0.3s;
+    white-space: nowrap; /* Prevents link text from breaking */
 }
 
 .page-link:hover {
