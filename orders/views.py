@@ -110,17 +110,19 @@ def checkout(request):
     cart_items = get_user_cart(request.user)
     total_amount = calculate_cart_total(request.user)
     discounted_amount = total_amount
+    coupon_discount = 0
     error_message = None
 
     if request.method == 'POST':
         coupon_code = request.POST.get("coupon")
-        # total_amount = request.POST.get('total_amount')
         if coupon_code:
             discounted_amount, error_message = validate_and_apply_coupon(coupon_code, total_amount)
+            coupon_discount = total_amount - discounted_amount
     
     return render(request, "orders/checkout.html", {
         "cart_items": cart_items,
         "total_amount": total_amount,
-        "discounted_amount": discounted_amount,
+        "discounted_amount": round(discounted_amount, 2),
+        "coupon_discount": round(coupon_discount, 2),
         "error_message": error_message,
     })
