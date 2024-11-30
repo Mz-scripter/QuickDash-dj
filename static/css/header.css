@@ -103,7 +103,7 @@ a {
 }
 
 /* Styles for autocomplete suggestions */
-#suggestions {
+#autocomplete-suggestions {
     position: absolute;
     top: 42px;
     left: 0;
@@ -114,7 +114,7 @@ a {
     margin-top: 10px;
 }
 
-#suggestions > * {
+#autocomplete-suggestions > div {
     margin: 10px 20px;
     cursor: pointer;
 }
@@ -209,8 +209,7 @@ a {
         width: 100px;
     }
 
-    #suggestions{
+    #autocomplete-suggestions{
         font-size: 15px;
     }
 }
-
