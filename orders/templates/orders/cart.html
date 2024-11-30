@@ -55,11 +55,12 @@
             <div class="total price">₦ {{ total_price }}</div>
         </div>
         <hr class="section-divider">
-        <form action="{% url 'checkout' %}" method="post" class="flxcent">
+        <form action="{% url 'checkout' %}" method="post" class="flxcent checkout-form">
             {% csrf_token %}
             <input type="hidden" name="total_amount" value="10999">
             <input type="text" name="coupon" placeholder="Enter Coupon Code">
-            <button type="submit" class="btn price">Checkout (₦ {{ total_price }}) </button>
+            <hr class="section-divider">
+            <button type="submit" class="btn price">Checkout (₦ {{ total_price }}) </button>            
         </form>
     </div>
     {% else %}
