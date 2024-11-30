@@ -14,9 +14,6 @@ def homePage(request):
         Q(description__icontains=query)
     )
 
-    paginator = Paginator(items, 1)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
 
     if restaurant_filter:
         items = items.filter(restaurant__name=restaurant_filter)
@@ -26,6 +23,10 @@ def homePage(request):
     
     if max_price:
         items = items.filter(price__lte=max_price)
+    
+    paginator = Paginator(items, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     restaurants = Restaurant.objects.all()
 
