@@ -2,6 +2,7 @@ from django.shortcuts import render
 from orders.models import Item, CartItem, WishListItem, Restaurant
 from django.db.models import Sum, Q
 from django.core.paginator import Paginator
+from django.http import JsonResponse
 
 def homePage(request):
     query = request.GET.get('q', '')
@@ -49,6 +50,14 @@ def homePage(request):
         'page_obj': page_obj,
         }
     return render(request, 'core/index.html', context)
+
+def autocomplete(request):
+    query = request.GET.get('q', '')
+    if query:
+        item_matches = Item.objects.filter(name__icontains=query).values_list('name', flat=True)
+        suggestions = list(item_matches)
+        return JsonResponse({'suggestions': suggestions})
+    return JsonResponse({'suggestions': []})
 
 def contactPage(request):
     return render(request, 'core/contact.html')

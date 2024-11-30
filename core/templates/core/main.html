@@ -37,9 +37,9 @@
                         
                         <button><img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon"></button>
                     </span>
-                    <input type="text" id="search-bar" class="search-bar" name="q" value="{{ query }}" placeholder="Search QuickDash" >
+                    <input type="text" id="search-bar" class="search-bar" name="q" value="{{ query }}" placeholder="Search QuickDash" autocomplete="off">
                     <!-- Autocomplete Suggestions -->
-                     <div id="suggestions"></div>
+                     <div id="autocomplete-suggestions"></div>
                      <!-- Restaurant Filter -->
                       <!-- <div class="filter-container"> -->
                         <select name="restaurant" id="" class="filter-select">
@@ -121,34 +121,38 @@
       
 </body>
 <script>
-    // function autocompleteSearch() {
-    //     var searchInput = document.getElementById("search-bar").value
-    //     // If the input is empty, hide suggestions
-    //     if (searchInput.length === 0) {
-    //         document.getElementById("suggestions").innerHTML = "";
-    //         return;
-    //     }
+    const searchBar = document.getElementById("search-bar");
+    const suggestionsBox = document.getElementById("autocomplete-suggestions");
 
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open("GET", "/autocomplete?query=" + searchInput, true);
-    //     xhr.onreadystatechange = function () {
-    //         if (xhr.readyState === 4 && xhr.status === 200) {
-    //             var suggestions = JSON.parse(xhr.responseText);
-    //             var suggestionBox = document.getElementById("suggestions");
-    //             suggestionBox.innerHTML = "";
+    searchBar.addEventListener("input", function () {
+        const query = this.value;
 
-    //             suggestions.forEach(function(suggestion) {
-    //                 var suggestionItem = document.createElement("div");
-    //                 suggestionItem.innerHTML = suggestion;
-    //                 suggestionItem.onclick = function () {
-    //                     document.getElementById("search-bar").value = suggestion;
-    //                     suggestionBox.innerHTML = "";
-    //                 };
-    //                 suggestionBox.appendChild(suggestionItem);
-    //             });
-    //         }
-    //     };
-    //     xhr.send();
-    // }
-  </script>
+        if (query.length > 0) {
+            fetch(`/autocomplete/?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const suggestions = data.suggestions;
+                    suggestionsBox.innerHTML = ""; // Clear previous suggestions
+                    suggestions.forEach(suggestion => {
+                        const div = document.createElement("div");
+                        div.textContent = suggestion;
+                        div.addEventListener("click", () => {
+                            searchBar.value = suggestion; // Set input value
+                            suggestionsBox.innerHTML = ""; // Clear suggestions
+                        });
+                        suggestionsBox.appendChild(div);
+                    });
+                });
+        } else {
+            suggestionsBox.innerHTML = ""; // Clear suggestions if input is empty
+        }
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!suggestionsBox.contains(event.target) && event.target !== searchBar) {
+            suggestionsBox.innerHTML = ""; // Hide suggestions on outside click
+        }
+    });
+
+</script>
 </html>
