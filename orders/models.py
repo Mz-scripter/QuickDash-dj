@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 
 class Restaurant(models.Model):
@@ -47,3 +48,23 @@ class WishListItem(models.Model):
 
     def __str__(self):
         return f"{self.user}'s favorite: {self.item.name}"
+
+
+class Coupon(models.Model):
+    code = models.CharField(max_length=20, unique=True)
+    discount_type = models.CharField(
+        max_length=10, choices=[("fixed", "Fixed"), ("percent", "Percent")]
+    )
+    discount_value = models.DecimalField(max_digits=10, decimal_places=2)
+    expiration_date = models.DateTimeField()
+    usage_limit = models.IntegerField(default=1)
+    times_used = models.IntegerField(default=0)
+
+    def is_valid(self):
+        """Checks if the coupon is valid."""
+        return (
+            self.times_used < self.usage_limit and self.expiration_date > timezone.now()
+        )
+    
+    def __str__(self):
+        return f"Coupon {self.code} - {self.discount_type} {self.discount_value}"
