@@ -1,0 +1,19 @@
+{% extends 'core/main.html' %}
+
+{% load static %}
+
+{% block content %}
+<h2>Checkout</h2>
+<ul>
+    {% for item in cart_items %}
+        <li>{{ item.quantity }} x {{ item.item.name }} = ₦{{ item.get_total_price }}</li>
+    {% endfor %}
+</ul>
+<p>Total Amount: ₦{{ total_amount }}</p>
+
+{% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+{% endif %}
+
+<h3>Discounted Amount: ₦{{ discounted_amount }}</h3>
+{% endblock %}

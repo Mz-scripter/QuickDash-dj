@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import ItemForm, RestaurantForm
 from users.models import Profile
 from django.http import HttpResponseForbidden
+from .utils import validate_and_apply_coupon, get_user_cart, calculate_cart_total
 
 
 
@@ -103,3 +104,23 @@ def toggle_wishlist(request, item_id):
 def wishlist(request):
     wishlist_items = WishListItem.objects.filter(user=request.user).select_related('item')
     return render(request, 'orders/wishlist.html', {'wishlist_items': wishlist_items})
+
+@login_required(login_url='login')
+def checkout(request):
+    cart_items = get_user_cart(request.user)
+    total_amount = calculate_cart_total(request.user)
+    discounted_amount = total_amount
+    error_message = None
+
+    if request.method == 'POST':
+        coupon_code = request.POST.get("coupon")
+        # total_amount = request.POST.get('total_amount')
+        if coupon_code:
+            discounted_amount, error_message = validate_and_apply_coupon(coupon_code, total_amount)
+    
+    return render(request, "orders/checkout.html", {
+        "cart_items": cart_items,
+        "total_amount": total_amount,
+        "discounted_amount": discounted_amount,
+        "error_message": error_message,
+    })
