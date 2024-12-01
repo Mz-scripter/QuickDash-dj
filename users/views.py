@@ -82,7 +82,7 @@ def registerPage(request):
             send_mail(
                 'Verify Your Email Address',
                 f'Click the link below to verify your email address: \n\n {verification_url}',
-                'mzscripterx5@gmail.com',
+                'adekomuheez567@gmail.com',
                 [user.email],
                 fail_silently=False,
             )

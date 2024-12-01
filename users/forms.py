@@ -14,6 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['fullname', 'email', 'phone_number', 'address', 'password1']
+        exclude = ['password2']
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
