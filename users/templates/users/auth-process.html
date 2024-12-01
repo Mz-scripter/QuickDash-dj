@@ -50,7 +50,7 @@
                     <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FAFAFA;">{{ message }}</p>
                 {% endfor %}
             {% endif %}
-            <button type="submit" onclick="alert(`A link was sent to your email. Click it to reset password.`);">REQUEST RESET</button>
+            <button type="submit">REQUEST RESET</button>
         </form>
         {% elif page == 'reset-token' %}
 
