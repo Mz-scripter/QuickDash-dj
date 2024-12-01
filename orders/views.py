@@ -4,8 +4,10 @@ from .models import Item, CartItem, WishListItem
 from django.contrib import messages
 from .forms import ItemForm, RestaurantForm
 from users.models import Profile
-from django.http import HttpResponseForbidden
-from .utils import validate_and_apply_coupon, get_user_cart, calculate_cart_total
+from django.http import HttpResponseForbidden, JsonResponse
+from .utils import validate_and_apply_coupon, get_user_cart, calculate_cart_total, get_coordinates_here, calculate_distance
+import json
+from datetime import timedelta
 
 
 
@@ -126,3 +128,30 @@ def checkout(request):
         "coupon_discount": round(coupon_discount, 2),
         "error_message": error_message,
     })
+
+def calculate_distance_view(request, item_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        user_lat = data.get('latitude')
+        user_lon = data.get('longitude')
+
+        # Fallback to the user's registered address if location access is denied
+        if not user_lat or not user_lon:
+            profile = get_object_or_404(Profile, user=request.user)
+            user_address = profile.address
+            user_coords = get_coordinates_here(user_address)
+        else:
+            user_coords = (user_lat, user_lon)
+        item = get_object_or_404(Item, id=item_id)
+        restaurant = item.restaurant
+        restaurant_coords = (restaurant.latitude, restaurant.longitude)
+
+        # Calculate distance
+        distance = calculate_distance(user_coords, restaurant_coords)
+
+        # Estimated time
+        average_speed_kmh = 50
+        time_hours = distance / average_speed_kmh
+        time_minutes = time_hours * 60
+        estimated_time = str(timedelta(minutes=round(time_minutes)))
+        return JsonResponse({'distance': round(distance, 2), 'time': estimated_time})

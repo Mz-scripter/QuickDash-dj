@@ -31,10 +31,10 @@
                     </div>
                     <div class="delivery-time-section flx">
                         <span class="time-icon-container flxcent"> 
-                            <img src="{% static 'images/time.svg' %}" alt="" class="time-icon">
+                            <button class="calculate-distance-btn" data-item-id="{{ item.id }}">Get Distnace</button>
                         </span>
-                         <span class="time-duration">
-                            20-30 minutes
+                         <span class="time-duration distance-output" style="display: none;" id="distance-{{ item.id }}">
+                            
                         </span>
                     </div>
 
@@ -94,6 +94,46 @@
             {% endif %}
             </div>
     </div>
+
+    <script>
+        // Loop through each item and attach the click event listener to the 'Get Distance' button
+        document.querySelectorAll('.calculate-distance-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const item_id = this.getAttribute('data-item-id');
+
+                // Get user location if available
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const user_lat = position.coords.latitude;
+                    const user_lon = position.coords.longitude;
+
+                    // Dynamically generate the URL using the correct item_id
+                    const url = "{% url 'calculate_distance' item_id=0 %}".replace('0', item_id);
+
+                    // Send POST request with the item_id nad user location
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}',
+                        },
+                        body: JSON.stringify({
+                            latitude: user_lat,
+                            longitude: user_lon,
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Display the distance
+                        // const distanceElement = document.getElementById('distance-' + item_id);
+                        // distanceElement.textContent = 'Distance: ' + data.distance + ' km';
+                        // distanceElement.style.display = 'initial';
+                        alert(`The distance is ${data.distance} km and estimated time is ${data.time} `)
+                    })
+                    .catch(error => console.error('Error:', error));
+                });
+            });
+        });
+    </script>
    
 
 

@@ -1,4 +1,9 @@
 from .models import Coupon, CartItem
+import requests
+from geopy.distance import geodesic
+
+HERE_API_KEY = 'js1J-ZC70g74K0RzzJPUsaTB-lu3Cq4kDvqXwVaJnmc'
+GEOCODING_URL = "https://geocode.search.hereapi.com/v1/geocode"
 
 def validate_and_apply_coupon(code, total_amount):
     """
@@ -39,3 +44,21 @@ def calculate_cart_total(user):
     """
     cart_items = get_user_cart(user)
     return sum(item.get_total_price() for item in cart_items)
+
+def get_coordinates_here(address):
+    """Get latitude and longitude of an address using the HERE Geocoding API."""
+    params = {
+        "q": address,
+        "apiKey": HERE_API_KEY,
+    }
+    response = requests.get(GEOCODING_URL, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if 'items' in data and len(data['items']) > 0:
+            coordinates = data['items'][0]['position']
+            return coordinates['lat'], coordinates['lng']
+    return None
+
+def calculate_distance(coord1, coord2):
+    """Calculate the distance between two coordinates using the geopy library."""
+    return geodesic(coord1, coord2).kilometers
