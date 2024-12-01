@@ -51,56 +51,6 @@
                 <p>Don't have an account?</p><a href="{% url 'register' %}">Register</a>
             </div>
         </form>
-
-        {% else %}
-
-        <h2 class="title">REGISTER</h2>
-        <form action="{% url 'register' %}" method="POST" class="flx" enctype="multipart/form-data">
-            {% csrf_token %} 
-
-            <div class="input-field">
-                <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
-                 {{ form.fullname }}
-                <label for="fullname">Full Name</label>
-            </div>
-
-            <div class="input-field">
-                <!-- <input id="email" name="email" required="" type="email" value=""> -->
-                 {{ form.email }}
-                <label for="email">Email</label>
-            </div>
-
-            <div class="input-field">
-                <!-- <input id="phone_number" name="phone_number" required="" type="text" value=""> -->
-                 {{ form.phone_number }}
-                <label for="phone_number">Phone Number (+234 xxx xxxx xxx)</label>
-            </div>
-
-            <div class="input-field">
-                <!-- <input id="address" name="address" required="" type="text" value=""> -->
-                 {{ form.address }}
-                <label for="address">Address</label>
-            </div>
-          
-            <div class="input-field">
-                <!-- <input id="password" maxlength="20" minlength="8" name="password" required="" type="password" value=""> -->
-                 {{ form.password1 }}
-                <label for="password">Password</label>
-            </div>
-
-            {% if messages %}
-                <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-            <button  type="submit" style="margin-top: 15px;">REGISTER</button>
-            <div class="login flxcent">
-                <p>Have an account?</p><a href="{% url 'login' %}">Sign In</a>
-            </div>
-        </form>
-
         {% endif %}
     </div>    
 </body>

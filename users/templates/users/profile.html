@@ -29,10 +29,6 @@
                     <img src="{% static 'images/account-head.svg' %}" alt="" class="link-icon">
                     My Account
                 </a>
-                <a href="" class="link orders flxcent">
-                    <img src="{% static 'images/past-orders.svg' %}" alt="" class="link-icon">
-                    Past Orders
-                </a>
                 <a href="{% url 'update_profile' %}" class="link edit flxcent">
                     <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
                     Update Profile
@@ -82,7 +78,7 @@
             {% endif %}
 
         </form>
-        <a href="{% url 'logout' %}" class="btn">Logout</a>
+        <a href="{% url 'logout' %}" class="btn logout-btn">Logout</a>
     </div>
 </body>
 

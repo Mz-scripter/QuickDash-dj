@@ -11,6 +11,7 @@
 
     <body class="flxcent">
         <form action="" method="POST" class="contact-form flxcent">
+            {% csrf_token %}
             <input type="text" name="name" placeholder="Name" class="contact-input" required>
             <input type="email" name="email" placeholder="Email" class="contact-input" required>
             <textarea name="message" placeholder="Message" class="contact-input" required rows="5"></textarea>
