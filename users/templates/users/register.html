@@ -28,14 +28,40 @@
         <h2 class="title">REGISTER</h2>
         <form action="" method="POST" class="flx" enctype="multipart/form-data">
             {% csrf_token %} 
-            {% for field in form %}
             <div class="input-field">
-                {{ field }}
                 <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
-                 <!-- {{ form.fullname }} -->
-                <label for="f{{ field.label.lower }}">{{ field.label }}</label>
+                 {{ form.fullname }}
+                <label for="id_fullname">Fullname</label>
             </div>
-            {% endfor %}
+
+            <div class="input-field">
+                <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
+                 {{ form.email }}
+                <label for="id_email">Email</label>
+            </div>
+
+            <div class="input-field">
+                <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
+                 {{ form.phone_number }}
+                <label for="id_phone_number">Phone Number (+234 xxx xxxx xxx)</label>
+            </div>
+
+            <div class="input-field">
+                <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
+                 {{ form.address }}
+                <label for="id_address">Address</label>
+            </div>
+
+            <div class="input-field">
+                <!-- <input id="fullname" name="fullname" required="" type="text" value=""> -->
+                 {{ form.password1 }}
+                <label for="id_password1">Password</label>
+            </div>
+
+            <div class="input-field">
+                {{ form.password2 }}
+                <label for="id_password2">Confirm Password</label>
+            </div>
 
             {% if messages %}
                 {% for message in messages %}
