@@ -3,7 +3,7 @@ import django
 from django.contrib.auth import get_user_model
 
 # Set up Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project_name.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quickdash.settings')
 django.setup()
 
 # Get the User model
