@@ -3,10 +3,21 @@ from django.conf import settings
 from django.utils import timezone
 
 
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     address = models.TextField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        from .utils import get_coordinates_here
+        if not self.latitude or not self.longitude:
+            coords = get_coordinates_here(self.address)
+            if coords:
+                self.latitude, self.longitude = coords
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
