@@ -15,9 +15,12 @@ django-common-helpers==0.9.2
 django-timezone-field==7.0
 geographiclib==2.0
 geopy==2.4.1
+gunicorn==23.0.0
 idna==3.10
 kombu==5.4.2
+pillow==11.0.0
 prompt_toolkit==3.0.48
+psycopg-binary==3.2.3
 python-crontab==3.2.0
 python-dateutil==2.9.0.post0
 redis==5.2.0

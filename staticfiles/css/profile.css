@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.numc {
+    padding: 8px;
+}
+
+li {
+    list-style: none;
+}
+
+
+.account-details {
+    margin-top: 100px;
+    padding-top: 100px;
+    z-index: 100;
+    width: 85%;
+    position: relative;
+    height: 60%;
+    align-self: center;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-shadow:  0px 1px 4px rgba(0, 0, 0, 0.16);
+    border-radius: 3px;
+    padding: 20px;
+    background-color: #FAFAFA;
+    background: #FAFAFA;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.profile-form {
+    width: 100%;
+    padding-top: 25px;
+}
+
+.profile-input:active,
+.profile-input:focus {
+    outline: none;
+}
+
+.profile-det {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+label {
+    font-size: 20px;
+    font-weight: 400;
+    color: #1D242B;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.profile-input {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    color: #979897;
+    font-weight: 300;
+    padding-left: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.links {
+    padding: 10px;
+    position: absolute;
+    width: 95%;
+    justify-content: space-between;
+    top: 1px;
+    font-size: 18px;
+}
+
+.link-icon {
+    width: 18px;
+    margin-right: 5px;
+}
+
+.link {
+ background-color: #cacaca;
+ width: 100%;
+ height: 30px;
+ border-radius: 5px;
+ color: #1D242B;
+ margin-right: 3px;
+ transition: background-color 0.5s;
+}
+
+.link:hover,
+.link:active {
+    background-color: #FAFAFA;
+}
+
+.logout-btn,
+.profile-btn {
+    margin: 10px auto;
+}
+
+
+@media (max-width: 500px) {
+    .numc {
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        font-size: 12px;
+        background-color: rgb(250, 66, 66);
+        color: #FAFAFA;
+        padding: 10px;
+        height: 10px;
+        width: 10px;
+        border-radius: 10px;
+    }
+
+    .account-details {
+        margin-bottom: 100px;
+    }
+
+    .link {
+        font-size: 13px;
+    }
+    .link-icon {
+        width: 15px;
+    }
+}
+
+.links {
+    width: 85%;
+    justify-self: center;
+    align-self: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+
