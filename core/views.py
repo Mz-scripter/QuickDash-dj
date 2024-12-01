@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from orders.models import Item, CartItem, WishListItem, Restaurant
 from django.db.models import Sum, Q
 from django.core.paginator import Paginator
 from django.http import JsonResponse
+from django.core.mail import send_mail
 
 def homePage(request):
     query = request.GET.get('q', '')
@@ -25,7 +26,7 @@ def homePage(request):
     if max_price:
         items = items.filter(price__lte=max_price)
     
-    paginator = Paginator(items, 3)
+    paginator = Paginator(items, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
@@ -60,4 +61,16 @@ def autocomplete(request):
     return JsonResponse({'suggestions': []})
 
 def contactPage(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        send_mail(
+            f"{name} contacted from the Contact Form.",
+            f"{message}",
+            'adekomuheez567@gmail.com',
+            ['adekomuheez567@gmail.com']
+        )
+        return redirect('contact')
     return render(request, 'core/contact.html')

@@ -103,6 +103,10 @@ label {
     background-color: #FAFAFA;
 }
 
+.logout-btn,
+.profile-btn {
+    margin: 10px auto;
+}
 
 
 @media (max-width: 500px) {

@@ -33,10 +33,6 @@
                     <img src="{% static 'images/account-head.svg' %}" alt="" class="link-icon">
                     My Account
                 </a>
-                <a href="" class="link orders flxcent">
-                    <img src="{% static 'images/past-orders.svg' %}" alt="" class="link-icon">
-                    Past Orders
-                </a>
                 <a href="{% url 'update_profile' %}" class="link edit flxcent">
                     <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
                     Update Profile
@@ -64,7 +60,7 @@
                 <small class="form-text text-muted">{{ form.is_seller.help_text }}</small>
             </div>
 
-            <button class="btn" type="submit">Update Profile</button>
+            <button class="btn profile-btn" type="submit">Update Profile</button>
         </form>
     </div>
 </body>

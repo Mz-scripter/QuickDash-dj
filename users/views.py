@@ -49,7 +49,7 @@ def loginPage(request):
             messages.error(request, 'Email or Password incorrect')
 
     context = {'page': page}
-    return render(request, 'users/login-register.html', context)
+    return render(request, 'users/login.html', context)
 
 def logoutUser(request):
     logout(request)
