@@ -17,3 +17,6 @@ def create_superuser():
         print(f"Superuser {USERNAME} created successfully")
     else:
         print(f"Superuser {USERNAME} already exists")
+
+if __name__ == '__main__':
+    create_superuser()
