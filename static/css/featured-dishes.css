@@ -1,6 +1,6 @@
 #featured-dishes {
     width: 85%;
-    margin: 40px auto 30px auto;
+    margin: 40px auto 150px auto;
 }
 
 .restaurant-name {
@@ -174,7 +174,6 @@
     padding: 10px 5px;
     gap: 5px; /* Adds spacing between links */
     max-width: 1000px;
-    background-color: #e0e0e0;
 }
 
 .page-link,
