@@ -7,13 +7,12 @@ from .models import Profile
 class CustomUserCreationForm(UserCreationForm):
     fullname = forms.CharField(max_length=150, required=True, label='Full Name')
     email = forms.EmailField(required=True, label='Email')
-    phone_number = forms.CharField(max_length=15, required=False, label='Phone Number (+234 xxx xxxx xxx)')
     address = forms.CharField(max_length=200, required=False, label='Address')
     password1 = forms.CharField(widget=forms.PasswordInput, label='Password', help_text='Your password must be at least 8 character long.')
 
     class Meta:
         model = User
-        fields = ['fullname', 'email', 'phone_number', 'address', 'password1']
+        fields = ['fullname', 'email', 'address', 'password1']
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
