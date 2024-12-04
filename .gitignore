@@ -17,3 +17,6 @@ Thumbs.db
 # IDE-specific
 .vscode/
 *.idea/
+
+# Environment varibles
+.env

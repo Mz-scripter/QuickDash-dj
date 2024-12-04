@@ -12,7 +12,7 @@ class ItemForm(forms.ModelForm):
             'restaurant': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'rows': 4}),
             'rating': forms.NumberInput(attrs={'min': 0, 'max': 5, 'step': 0.1,}),
-            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            # 'image': forms.FileInput(attrs={'class': 'form-control'}),
             'restaurant': forms.Select(attrs={'class': 'form-control'})
         }
 
