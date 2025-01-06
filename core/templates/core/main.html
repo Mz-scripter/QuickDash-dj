@@ -7,111 +7,120 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'css/header.css' %}">
-    <link rel="stylesheet" href="{% static 'css/general.css' %}">
-    <link rel="stylesheet" href="{% static 'css/card.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-    <link rel="stylesheet" href="{% static 'css/featured-dishes.css' %}">
-    <link rel="stylesheet" href="{% static 'css/button.css' %}">
-    
+    <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
+    <link rel="icon" type="image/jpg" href="{% static 'images/logo.png' %}">  
     <title>Convenience Delivered, Every Time | QuickDash</title>
 </head>
-<body>
+<body class="bg-[#cae8ff] text-black relative">
      <!-- Header Section -->
-     <header class="flx">
-        <div class="left-section flx">
-            <a href="{% url 'home' %}">
-                <div class="logo-container">
-                    <img src="{% static 'images/logo.svg' %}" alt="" class="logo">
-                </div>
-                <div class="name">QuickDash</div>
-            </a>
-            
-        </div>
+     <header class="flex justify-between  items-center p-4 bg-[#050a30] text-white fixed top-0 w-full z-50">
+        <!-- logo -->
+         <a href="{% url 'home' %}">
+            <div class="flex items-center space-x-2">
+                <img src="{% static 'images/logo.png' %}" alt="logo" class="h-8">
+                <span class="text-lg font-bold">QuickDash</span>
+             </div>
+         </a>
+         
 
-        <div class="right-section flxcent">
-            <form action="{% url 'home' %}" method="GET" class="search-form flx">
-                <div class="search flxcent">
-                    <span class="search-icon-container flxcent">
-                        
-                        <button><img src="{% static 'images/search-icon.svg' %}" alt="Search Icon" class="search-icon"></button>
-                    </span>
-                    <input type="text" id="search-bar" class="search-bar" name="q" value="{{ query }}" placeholder="Search QuickDash" autocomplete="off">
-                    <!-- Autocomplete Suggestions -->
-                     <div id="autocomplete-suggestions"></div>
-                     <!-- Restaurant Filter -->
-                      <!-- <div class="filter-container"> -->
-                        <select name="restaurant" id="" class="filter-select">
-                            <option value="">All Restaurants</option>
-                            {% for restaurant in restaurants %}
-                            <option 
-                                value="{{ restaurant.name }}"
-                                {% if restaurant.name == restaurant_filter %}selected{% endif %}>
-                            {{ restaurant.name }}
-                            </option>
-                            {% endfor %}
-                          </select>
+         <!-- Search bar with filters -->
+          <div class="md:flex items-center space-x-4 flex-1 mx-6">
+            <div class="relative flex-1">
+                <form action="{% url 'home' %}" method="GET">
+                    <input type="text" placeholder="Search ..." id="search-bar" name="q" value="{{ query }}"
+                    class="w-full px-4 py-2 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <!-- Clear Icon -->
+                    <button id="clear-search"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 focus:outline-none" onclick="clearSearch()" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    </button>
+                    </div>
+                    <select name="restaurant" id="" 
+                    class="px-4 py-2 rounded-md bg-white text-black border focus:outline-none focus:ring-2 focus:ring-blue-400 hidden md:flex">
+                        <option value="">All Restaurants</option>
+                        {% for restaurant in restaurants %}
+                        <option 
+                        value="{{ restaurant.name }}"
+                        {% if restaurant.name == restaurant_filter %}selected{% endif %}>
+                        {{ restaurant.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <button class="hidden md:flex px-4 py-2 bg-[#cae8ff] text-[#050a30] rounded-md hover:bg-[#b6e0ff] focus:outline-none">
+                        Search
+                    </button>
+                </form>
+                
+          </div>
+
+        <!-- Cart and Profile -->
+         <div class="hidden md:flex items-center space-x-4">
+            <!-- Cart Icon -->
+             <a href="{% url 'cart' %}" class="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"                 stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l3-9H6.4M7 13L5.4 5M7 13h10m-7 6h4m-2-2v2m0 0a3 3 0 100-6 3 3 0 000 6z" />
+                </svg>
+                {% if request.user.is_authenticated %}
+                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ total_items }}</span>
+                {% endif %}
+             </a>
+
+            <!-- Profile Icon -->
+             <a href="{% url 'profile' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M5.121 17.804A9 9 0 1118.879 6.196a9 9 0 01-13.758 11.608zM12 10a3 3 0 110-6 3 3 0 010 6zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+             </a>
+         </div>
+     </header>
     
-                          <!-- Price range filters -->
-                           <!-- <input type="number" class="filter-input" name="min_price" placeholder="Min price" value="{{ min_price }}">
-                           <input type="number" class="filter-input" name="max_price" placeholder="Max price" value="{{ max_price }}"> -->
-                      <!-- </div> -->
-                      
-                </div>
-                <button type="submit" class="btn">Search</button>
-            </form>
-            <div class="profile-cart-container flxcent">
-                <div class="cart-container flxcent">
-                    <a href="{% url 'cart' %}">
-                        <img src="{% static 'images/cart-2.svg' %}" alt="" class="cart">
-                    </a>
-                    {% if request.user.is_authenticated %}
-                    <span class="numc flxcent">{{ total_items }}</span>
-                    {% endif %}
-                </div>
-                    <div class="profile-container flxcent">
-                        <a href="{% url 'profile' %}">
-                            <img src="{% static 'images/profile-circle.svg' %}" alt="" class="profile">
-                        </a>
-                    </div>                
-            </div>
-        </div>
-       
+     <!-- Floating Contact Icon -->
+      <a href="{% url 'profile' %}" class="hidden md:flex fixed bottom-4 right-4 p-3 bg-[#050a30] text-white rounded-full shadow-lg hover:bg-blue-600 focus:outline-none">
+        <img src="{% static 'images/help.svg' %}" alt="Contact Us" class="h-6 w-6">
+      </a>
 
-    </header>
-    <!-- End of Header Section -->
+    <!-- Phone Navbar -->
+      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-[#050a30] text-white flex justify-around py-2 shadow-md z-50">
+        <a href="{% url 'home' %}" class="flex flex-col items-center space-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 10l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V10z" />
+            </svg>
+            <span class="text-xs">Home</span>
+        </a>
 
-    <!-- Navbar for Smaller screens -->
-    <nav id="navbar">
-        <a href="{% url 'home' %}" class="nav-link">
-            <img src="{% static 'images/home-icon.svg' %}" alt="" class="nav-icon nav-home">
-            <span class="nav-text">HOME</span>            
+        <a href="{% url 'cart' %}" class="flex flex-col items-center space-y-1 relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 3h2l.4 2M7 13h10l3-9H6.4M7 13L5.4 5M7 13h10m-7 6h4m-2-2v2m0 0a3 3 0 100-6 3 3 0 000 6z" />
+            </svg>
+            {% if request.user.is_authenticated %}
+            <span class="absolute -top-2 right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ total_items }}</span>
+            {% endif %}
+            <span class="text-xs">Cart</span>
         </a>
-        <a href="{% url 'cart' %}" class="nav-link nav-cart">
-            <img src="{% static 'images/cart-s.svg' %}" alt="" class="nav-icon">
-            <span class="numc flxcent">{{ total_items }}</span>
-            <span class="nav-text">CART</span>
-        </a>
-        <a href="{% url 'contact' %}" class="nav-link">
-            <img src="{% static 'images/message.svg' %}" alt="" class="nav-icon nav-help">
-            <span class="nav-text">HELP</span>
-        </a>
-        <a href="{% url 'profile' %}" class="nav-link">
-            <img src="{% static 'images/profile-circle.svg' %}" alt="" class="nav-icon nav-profile">
-            <span class="nav-text">PROFILE</span>
-        </a>
-        
-     </nav>
-    <!-- End of Navbar for Smaller screens -->
 
-    <!-- Help Icon on Larger Screens -->
-    <div class="help-icon-container">
-        <a href="{% url 'contact' %}">
-            <img src="{% static 'images/help.svg' %}" alt="" class="help-icon">
+        <a href="{% url 'contact' %}" class="flex flex-col items-center space-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M8 10h8M8 14h8m-4 6h4a2 2 0 002-2V7a2 2 0 00-2-2h-4a2 2 0 00-2 2v11m-6 0h6" />
+            </svg>
+            <span class="text-xs">Help</span>
         </a>
-      </div>
-      <!-- End of Help Icon on Larger Screens -->
+
+        <a href="{% url 'profile' %}" class="flex flex-col items-center space-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5.121 17.804A9 9 0 1118.879 6.196a9 9 0 01-13.758 11.608zM12 10a3 3 0 110-6 3 3 0 010 6zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span class="text-xs">Profile</span>
+        </a>
+      </nav>
     
 
       {% block content %}
@@ -153,6 +162,10 @@
             suggestionsBox.innerHTML = ""; // Hide suggestions on outside click
         }
     });
+
+    function clearSearch() {
+        searchBar.value = "";
+    }
 
 </script>
 </html>
