@@ -3,136 +3,82 @@
 {% load static %}
 
 {% block content %}
+<div class="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-20 pb-16">
+    {% for item in page_obj %}
+     <div class="bg-white shadow-lg rounded-lg overflow-hidden hover:scale-105 hover:shadow-xl transition-transform duration-300">
+        <!-- Item Image -->
+         <div class="relative">
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full h-48 object-cover">
+            <span class="absolute top-2 left-2 bg-[#050a30] text-white text-xs px-2 py-1 rounded-full font-semibold">
+                {{ item.rating }} ★
+            </span>
+         </div>
 
-    <!-- Intro -->
-    <div class="hero">
-        <img src="{% static 'images/menu-hero.jpg' %}" alt="" class="hero-img">
-        <h1 class="flxcent">Craving something delicious? You're in the right place.</h1>
-    </div>
-    <!-- End of Intro -->
-
-    <!-- Featured Dishes Section -->
-    <section id="featured-dishes">
-        <div class="restaurant-dishes">
-            <!-- Dish Card Item -->
-             {% for item in page_obj %}
-            <div class="dish-item">
-                <div class="top-dish-section">  
-                    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="dish-img">
-
-             </div>
-                <div class="bottom-dish-section flx">
-                    <div class="name-rating-section flx">
-                        <span class="dish-name">{{ item.name }}</span>
-                        <span class="dish-rating flxcent">
-                            <span class="dish-rate">{{ item.rating }}</span>
-                            <span class="star-emoji">&#9733;</span>
-                        </span>
-                    </div>
-                    <div class="delivery-time-section flx">
-                        <span class="time-icon-container flxcent"> 
-                            <button class="calculate-distance-btn" data-item-id="{{ item.id }}">Get Distnace</button>
-                        </span>
-                         <span class="time-duration distance-output" style="display: none;" id="distance-{{ item.id }}">
-                            
-                        </span>
-                    </div>
-
-                    <div class="add-wish-box">
-                        <div class="wish-list">
-                            <a href="{% url 'toggle_wishlist' item.id %}">
-                                <img src="{% static 'images/favorite.svg' %}" alt="" class="wish-list-icon">
-                            </a>
-                            {% if item.id in user_wishlist %}
-                            <span class="hover-text">Remove from Wish List</span>
-                            {% else %}
-                            <span class="hover-text">Add to Wish List</span>
-                            {% endif %}
-                        </div>
-    
-                        <div class="add-cart">
-                            <a href="{% url 'add_to_cart' item.id %}">
-                                <img src="{% static 'images/plus.svg' %}" alt="" class="add-cart-icon">
-                            </a>
-                            <span class="hover-text">Add to Cart</span>
-                        </div>
-                    </div>
-                   
-                </div>
+        <!-- Item Info -->
+         <div class="p-4">
+            <h2 class="text-lg font-bold text-[#050a30] truncate">{{ item.name }}</h2>
+            <div class="flex justify-between items-center mt-3">
+                <!-- Add to Cart Button -->
+                 <button class="px-4 py-2 bg-[#cae8ff] text-[#050a30] font-semibold rounded-md hover:bg-[#b6e0ff] focus:outline-none">
+                    <a href="{% url 'add_to_cart' item.id %}">
+                        Add to Cart
+                    </a>
+                 </button>
                 
+                 <!-- Add Wishlist Button -->
+                 <button
+                 class="px-2 py-2 bg-[#050a30] text-white rounded-full hover:bg-blue-600 focus:outline-none"
+                 title="Add to Wishlist">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 116.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
+                 </svg>
+               </button>
             </div>
-            <!-- End of Dish Card Item -->
-             {% endfor %}
+         </div>
+     </div>
+    {% endfor %}
+</div>
 
-        </div>
-    </section>
-   <!-- End of Featured Dishes Section -->
-    <div class="pagination-wrapper">
-        <div class="pagination">
-            {% if page_obj.has_previous %}
-                <a href="?page=1" class="page-link">&laquo; First</a>
-                <a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
-            {% else %}
-                <span class="page-link disabled">&laquo; First</span>
-                <span class="page-link disabled">Previous</span>
-            {% endif %}
-        
-            {% for num in page_obj.paginator.page_range %}
-                {% if page_obj.number == num %}
-                    <span class="page-link current">{{ num }}</span>
-                {% else %}
-                    <a href="?page={{ num }}" class="page-link">{{ num }}</a>
-                {% endif %}
-            {% endfor %}
-        
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">Last &raquo;</a>
-            {% else %}
-                <span class="page-link disabled">Next</span>
-                <span class="page-link disabled">Last &raquo;</span>
-            {% endif %}
-            </div>
-    </div>
 
     <script>
         // Loop through each item and attach the click event listener to the 'Get Distance' button
-        document.querySelectorAll('.calculate-distance-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const item_id = this.getAttribute('data-item-id');
+        // document.querySelectorAll('.calculate-distance-btn').forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         const item_id = this.getAttribute('data-item-id');
 
-                // Get user location if available
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const user_lat = position.coords.latitude;
-                    const user_lon = position.coords.longitude;
+        //         // Get user location if available
+        //         navigator.geolocation.getCurrentPosition(function(position) {
+        //             const user_lat = position.coords.latitude;
+        //             const user_lon = position.coords.longitude;
 
-                    // Dynamically generate the URL using the correct item_id
-                    const url = "{% url 'calculate_distance' item_id=0 %}".replace('0', item_id);
+        //             // Dynamically generate the URL using the correct item_id
+        //             const url = "{% url 'calculate_distance' item_id=0 %}".replace('0', item_id);
 
-                    // Send POST request with the item_id nad user location
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}',
-                        },
-                        body: JSON.stringify({
-                            latitude: user_lat,
-                            longitude: user_lon,
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Display the distance
-                        // const distanceElement = document.getElementById('distance-' + item_id);
-                        // distanceElement.textContent = 'Distance: ' + data.distance + ' km';
-                        // distanceElement.style.display = 'initial';
-                        alert(`The distance is ${data.distance} km and estimated time is ${data.time} `)
-                    })
-                    .catch(error => console.error('Error:', error));
-                });
-            });
-        });
+        //             // Send POST request with the item_id nad user location
+        //             fetch(url, {
+        //                 method: 'POST',
+        //                 headers: {
+        //                     'Content-Type': 'application/json',
+        //                     'X-CSRFToken': '{{ csrf_token }}',
+        //                 },
+        //                 body: JSON.stringify({
+        //                     latitude: user_lat,
+        //                     longitude: user_lon,
+        //                 })
+        //             })
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 // Display the distance
+        //                 // const distanceElement = document.getElementById('distance-' + item_id);
+        //                 // distanceElement.textContent = 'Distance: ' + data.distance + ' km';
+        //                 // distanceElement.style.display = 'initial';
+        //                 alert(`The distance is ${data.distance} km and estimated time is ${data.time} `)
+        //             })
+        //             .catch(error => console.error('Error:', error));
+        //         });
+        //     });
+        // });
     </script>
    
 
