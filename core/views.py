@@ -55,7 +55,7 @@ def homePage(request):
 def autocomplete(request):
     query = request.GET.get('q', '')
     if query:
-        item_matches = Item.objects.filter(name__icontains=query).values_list('name', flat=True)
+        item_matches = Item.objects.filter(name__icontains=query).values_list('name', flat=True)[:8]
         suggestions = list(item_matches)
         return JsonResponse({'suggestions': suggestions})
     return JsonResponse({'suggestions': []})
