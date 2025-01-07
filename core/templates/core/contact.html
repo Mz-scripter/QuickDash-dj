@@ -3,24 +3,24 @@
 {% load static %}
 
 {% block content %}
-
     <head>
-        <link rel="stylesheet" href="{% static 'css/contact.css' %}">
         <title>QuickDash | Help & FAQ's</title>
     </head>
 
-    <body class="flxcent">
-        <form action="" method="POST" class="contact-form flxcent">
+    <div class="min-h-screen flex items-center justify-center">
+        <form action="" method="POST" class="contact-form max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg space-y-4">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Name" class="contact-input" required>
-            <input type="email" name="email" placeholder="Email" class="contact-input" required>
-            <textarea name="message" placeholder="Message" class="contact-input" required rows="5"></textarea>
-            <button type="submit" class="btn">Submit</button>
+            <input type="text" name="name" placeholder="Name" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300" required>
+    
+            <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300" required>
+    
+            <textarea name="message" placeholder="Message" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300" required rows="5"></textarea>
+    
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:ring focus:ring-blue-300 transition-all duration-200">Submit</button>
         </form>
-        <div class="contact-img-container">
-            <img src="{% static 'images/help-bg.jpg' %}" class="contact-img" alt="Background Image">
-        </div>
-    </body>
+    
+    </div>
+    
     
 
 {% endblock %}
