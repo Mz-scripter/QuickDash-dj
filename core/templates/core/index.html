@@ -57,6 +57,28 @@
     {% endfor %}
 </div>
 
+<!-- Pagination -->
+<div class="mt-8 flex justify-center items-center space-x-4 pb-16">
+    <!-- Previous Button -->
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if restaurant_filter %}&restaurant={{ restaurant_filter }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="px-4 py-2 bg-[#050a30] text-white rounded-md hover:bg-[#073263] focus:ring focus:ring-blue-300 transition-all duration-200 ease-in-out">Previous</a>
+    {% else %}
+    <button class="px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">Previous</button>
+    {% endif %}
+  
+    <!-- Page Info -->
+    <span class="text-gray-700 font-medium">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+  
+    <!-- Next Button -->
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if restaurant_filter %}&restaurant={{ restaurant_filter }}{% endif %}{% if min_price %}&min_price={{ min_price }}{% endif %}{% if max_price %}&max_price={{ max_price }}{% endif %}" class="px-4 py-2 bg-[#050a30] text-white rounded-md hover:bg-[#073263] focus:ring focus:ring-blue-300 transition-all duration-200 ease-in-out">Next</a>
+    {% else %}
+    <button class="px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">Next</button>
+    {% endif %}
+  </div>
+  
 
     <script>
         // Loop through each item and attach the click event listener to the 'Get Distance' button
