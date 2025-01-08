@@ -8,6 +8,7 @@ from django.http import HttpResponseForbidden, JsonResponse
 from .utils import validate_and_apply_coupon, get_user_cart, calculate_cart_total, get_coordinates_here, calculate_distance
 import json
 from datetime import timedelta
+from django.db.models import Sum
 
 
 
@@ -24,7 +25,8 @@ def add_to_cart(request, item_id):
 def cartPage(request):
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.get_total_price() for item in cart_items)
-    context = {'cart_items': cart_items, 'total_price': total_price,}
+    total_items = CartItem.objects.filter(user=request.user).aggregate(total=Sum('quantity'))['total'] or 0
+    context = {'cart_items': cart_items, 'total_price': total_price, 'total_items': total_items}
     return render(request, 'orders/cart.html', context)
 
 @login_required(login_url='login')
