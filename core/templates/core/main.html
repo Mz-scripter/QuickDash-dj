@@ -60,22 +60,17 @@
 
           </div>
 
-        <!-- Cart and Profile -->
-         <div class="hidden md:flex items-center space-x-4">
-            <!-- Cart Icon -->
-             <a href="{% url 'cart' %}" class="relative">
-                <img src="{% static 'images/cart.svg' %}" alt="Cart" class="h-6 w-6">
-                
-                {% if request.user.is_authenticated %}
-                <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ total_items }}</span>
-                {% endif %}
-             </a>
-
-            <!-- Profile Icon -->
-             <a href="{% url 'profile' %}">
-                <img src="{% static 'images/profile.svg' %}" alt="Profile" class="h-6 w-6">
-             </a>
-         </div>
+        <div class="relative">
+            <!-- Burger Icon -->
+            <img id="burger-menu" src="{% static 'images/burger.svg' %}" alt="" class="h-6 w-6">
+            
+            <!-- Dropdown Menu -->
+            <div id="dropdown-menu" class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg hidden">
+                <a href="{% url 'wishlist' %}" class="block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out"> Wishlist</a>
+                <a href="{% url 'cart' %}" class="hidden lg:block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Cart</a>
+                <a href="{% url 'profile' %}" class="hidden lg:block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Profile</a>
+            </div>
+        </div>
      </header>
     
      <!-- Floating Contact Icon -->
@@ -171,6 +166,21 @@
         suggestionsBox.innerHTML = ""; // Clear suggestions
         suggestionsBox.classList.add("hidden"); // Hide suggestions
     });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const burgerMenu = document.getElementById("burger-menu");
+  const dropdownMenu = document.getElementById("dropdown-menu");
+
+  burgerMenu.addEventListener("click", () => {
+    dropdownMenu.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!dropdownMenu.contains(event.target) && event.target !== burgerMenu) {
+      dropdownMenu.classList.add("hidden");
+    }
+  });
 });
 
 
