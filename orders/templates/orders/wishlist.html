@@ -6,41 +6,29 @@
 
 <head>
     <title>QuickDash |Wish List</title>
-    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 </head>
 
-<body class="flx">
-    <div class="cart-item-container flx">
-       <h2>Your Wish List</h2>
-       <hr class="section-divider">
-        {% for wishlist_item in wishlist_items %}
-        <!-- Cart item -->
-        <div class="cart-item flx">
-            <div class="top-section flx">
-                <div class="prod-details flx">
-                    <img src="{{ wishlist_item.item.image.url }}" alt="{{ wishlist_item.item.name }}" class="prod-img">
-                    <div class="prod-title flx">
-                        <div class="prod-name">{{ wishlist_item.item.name }}</div>
-                        <div class="seller"><span class="seller-name">Seller: </span>{{ wishlist_item.item.restaurant }}</div>
-                        <div class="price small">₦ {{ wishlist_item.item.price }}</div>
-                    </div>
-                </div>
-                <div class="price big">₦ {{ wishlist_item.item.price }}</div>
-            </div>
-            <div class="bottom-section flx">
-                <div class="remove">
-                    <a href="{% url 'toggle_wishlist' wishlist_item.item.id %}" class="btn">
-                        <img src="{% static 'images/remove.svg' %}" alt="" class="rem-icon icon">
-                        Remove
-                    </a>
-                </div>
-            </div>
+<div class="container mx-auto mt-16 pb-24 px-4">
+    <!-- Page Title -->
+     <h1 class="text-2xl font-bold text-gray-800 mb-6">Wishlist</h1>
+
+    <!-- Wishlist Items -->
+     <div class="bg-white p-6 rounded-lg shadow-md space-y-6">
+        {% for item in wishlist_items %}
+        <div class="flex items-center space-x-4">
+            <!-- Item Image -->
+             <img src="{{ item.item.image.url }}" alt="{{ item.item.name }}" class="w-20 h-20 rounded-md object-cover">
+
+            <!-- Item Details -->
+             <div class="flex-1">
+                <h3 class="text-lg font-medium text-gray-800">{{ item.item.name }}</h3>
+                <p class="text-sm text-gray-500">Seller: {{ item.item.restaurant }}</p>
+                <p class="text-sm text-gray-500">Seller: ₦{{ item.item.price }}</p>
+             </div>
         </div>
-        <hr class="section-divider">
-        <!-- End of Cart item -->
+        <hr class="my-4 border-gray-300">
         {% endfor %}
-    </div>
-    
-</body>
+     </div>
+</div>
 
 {% endblock %}
