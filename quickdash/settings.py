@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
 
     'background_task',
+
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

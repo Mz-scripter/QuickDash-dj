@@ -70,7 +70,7 @@ def add_item(request):
             messages.success(request, "Item added successfully!")
             return redirect('profile')
         else:
-            messages.error(request, "Error adding item. Please check the form.")
+            messages.error(request, f"Error adding item. Please check the form. {form.errors}")
     else:
         form = ItemForm()
     return render(request, 'orders/add-item.html', {'form': form})
