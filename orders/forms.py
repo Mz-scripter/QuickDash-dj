@@ -9,9 +9,6 @@ class ItemForm(forms.ModelForm):
     price = forms.IntegerField(
         widget=forms.NumberInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'})
     )
-    restaurant = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'})
-    )
     description = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300', 'rows': 4})
     )
