@@ -5,14 +5,19 @@ from .models import Profile
 
 
 class CustomUserCreationForm(UserCreationForm):
-    fullname = forms.CharField(max_length=150, required=True, label='Full Name')
-    email = forms.EmailField(required=True, label='Email')
-    address = forms.CharField(max_length=200, required=False, label='Address')
-    password1 = forms.CharField(widget=forms.PasswordInput, label='Password', help_text='Your password must be at least 8 character long.')
+    fullname = forms.CharField(max_length=150, required=True, label='Full Name', widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
+
+    email = forms.EmailField(required=True, label='Email', widget=forms.EmailInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
+
+    address = forms.CharField(max_length=200, required=False, label='Address', widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
+
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}), label='Password', help_text='Your password must be at least 8 character long.')
+
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}), label='Password Confirmation', help_text='Your password must be at least 8 character long.')
 
     class Meta:
         model = User
-        fields = ['fullname', 'email', 'address', 'password1']
+        fields = ['fullname', 'email', 'address', 'password1', 'password2']
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -36,7 +41,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class PasswordResetForm(forms.Form):
-    email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    email = forms.EmailField(max_length=254, required=True, widget=forms.EmailInput(attrs={'placeholder': 'Email', 'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
 
 
 class ProfileUpdateForm(forms.ModelForm):

@@ -1,56 +1,53 @@
+{% extends 'core/main.html' %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+
+{% block content %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/general.css' %}">
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
-    <style>
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url("{% static 'images/bg-food.jpg' %}"), #0077C0;
-            background-position: right;
-            background-size: cover  ;
-        }
-    </style>
-    <title>Join QuickDash | Sign Up Today!</title>
+    <title>QuickDash | Welcome Back</title>
 </head>
 
-<body class="flxcent">
-    <div class="form-container">
-        {% if page == 'login' %}
+<div class="container mx-auto mt-16 pb-24 px-4">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Login</h1>
 
-        <h2 class="title">LOGIN</h2>
-        <form action="{% url 'login' %}" method="POST" class="flx">
-            {% csrf_token %}
-            <div class="input-field">
-                <input id="email" name="email" required="" type="email" value="">
-                <label for="email">Email</label>
-            </div>
-            <div class="input-field">
-                <input id="password" maxlength="20" minlength="8" name="password" required="" type="password" value="">
-                <label for="password">Password</label>
-            </div>
-            <div class="forget flxcent">
-                <a href="{% url 'password_reset_request' %}">Forget Password?</a>
-            </div>
-            {% if messages %}
-                {% for message in messages %}
-                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: #FAFAFA;">{{ message }}</p>
-                {% endfor %}
-            {% endif %}
-            <button type="submit" style="margin-top: 15px;">LOGIN</button>
-            <div class="login flxcent">
-                <p>Don't have an account?</p><a href="{% url 'register' %}">Register</a>
-            </div>
-        </form>
-        {% endif %}
-    </div>    
-</body>
+    <!-- Form Section -->
+     <form action="" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md space-y-6 max-w-lg mx-auto">
+        {% csrf_token %}
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" name="email" id="email" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300" required>
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input type="password" name="password" id="password" maxlength="20" min="8" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300" required>
+        </div>
+
+        <div class="flex justify-center items-center mt-4 text-black space-x-2">
+            <p>Can't remember your password?</p>
+            <a href="{% url 'password_reset_request' %}" class="text-blue-400 hover:text-blue-300 transition">Forget Password</a>
+          </div>
+
+        <!-- Messages -->
+         {% if messages %}
+         <div class="space-y-2">
+            {% for message in messages %}
+            <p class="text-sm text-gray-800 {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+         </div>
+         {% endif %}
+
+         <!-- Submit Button -->
+         <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-300 transition duration-200">Login</button>
+
+         <div class="flex justify-center items-center mt-4 text-black space-x-2">
+            <p>Have an account?</p>
+            <a href="{% url 'register' %}" class="text-blue-400 hover:text-blue-300 transition">Sign In</a>
+          </div>
+     </form>
+</div>
+
+
+
+{% endblock %}
