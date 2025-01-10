@@ -30,7 +30,12 @@
          {% if messages %}
          <div class="space-y-2">
             {% for message in messages %}
-            <p class="text-sm text-gray-800 {{ message.tags }}">{{ messages }}</p>
+            <div class="px-4 py-2 rounded-md text-white 
+                {% if message.tags == 'success' %} bg-green-500 
+                {% elif message.tags == 'error' %} bg-red-500 
+                {% else %} bg-blue-500 {% endif %}">
+                {{ message }}
+            </div>
             {% endfor %}
          </div>
          {% endif %}
@@ -55,7 +60,12 @@
         {% if messages %}
         <div class="space-y-2">
            {% for message in messages %}
-           <p class="text-sm text-gray-800 {{ message.tags }}">{{ messages }}</p>
+           <div class="px-4 py-2 rounded-md text-white 
+                {% if message.tags == 'success' %} bg-green-500 
+                {% elif message.tags == 'error' %} bg-red-500 
+                {% else %} bg-blue-500 {% endif %}">
+                {{ message }}
+            </div>
            {% endfor %}
         </div>
         {% endif %}
@@ -63,16 +73,13 @@
         <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-300 transition duration-200">RESET PASSWORD</button>
     </form>
     {% elif page == 'verify-email' %}
-    <h1 class="text-2xl font-bold text-gray-800 mb-6">Enter Verification Code</h1>
-    <form action="" method="POST" class="bg-white p-6 rounded-lg shadow-md space-y-6 max-w-lg mx-auto">
-        {% csrf_token %}
-        <div>
-            <label for="code">Verification Code</label>
-            <input type="text" id="code" name="code" required>
-        </div>
-        
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-300 transition duration-200">SUBMIT</button>
-    </form>
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Email Verified</h1>
+
+    <div class="bg-white p-6 rounded-lg shadow-md space-y-6 max-w-lg mx-auto">
+        <p class="text-gray-800">Your email has been verified. You can now login to your account.</p>
+        <a href="{% url 'login' %}" class="block text-center text-blue-500 hover:underline"></a> 
+    </div>
+    
     {% endif %}
 </div>
 {% endblock %}
