@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile
+from django.core.validators import RegexValidator
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -47,7 +48,8 @@ class PasswordResetForm(forms.Form):
 class ProfileUpdateForm(forms.ModelForm):
     fullname = forms.CharField(label='Full Name', widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
 
-    phone_number = forms.CharField(label='Phone Number', widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_number = forms.CharField(label='Phone Number', validators=[phone_regex], widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
 
     address = forms.CharField(label='Address', widget=forms.TextInput(attrs={'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300'}))
 

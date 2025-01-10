@@ -11,7 +11,7 @@ def global_context(request):
         except Profile.DoesNotExist:
             is_seller = False
     
-    allowed_emails = getattr(settings, 'ALLOWED_EMAILS', [])
+    allowed_emails = ['mzscripterx5@gmail.com', 'adekomuheez567@gmail.com']
 
     return {
         'is_seller': is_seller,
