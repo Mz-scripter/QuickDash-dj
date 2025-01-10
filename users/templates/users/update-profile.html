@@ -5,64 +5,37 @@
 {% block content %}
 
 <head>
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
-    <style>
-        body::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url("{% static 'images/profile-bg.jpg' %}");
-            background-position: right;
-            background-size: cover;
-            /* background-repeat: no-repeat; */
-        }
-        .profile-input {
-            border: 1px solid gray;
-        }
-    </style>
     <title>QuickDash | Edit Profile</title>
 </head>
 
-<body class="flxcent">
-    <div class="account-details flx">
-        <form class="profile-form" action="" method="POST">
-            {% csrf_token %}
-            <div class="links flx">
-                <a href="{% url 'profile' %}" class="link account flxcent">
-                    <img src="{% static 'images/account-head.svg' %}" alt="" class="link-icon">
-                    My Account
-                </a>
-                <a href="{% url 'update_profile' %}" class="link edit flxcent">
-                    <img src="{% static 'images/edit.svg' %}" alt="" class="link-icon">
-                    Update Profile
-                </a>
-            </div>
-            {{ form.non_field_errors }}
-            <div class="profile-det">
-                {{ form.fullname.label_tag }}
-                {{ form.fullname }}
-            </div>
+<div class="container mx-auto mt-16 pb-24 px-4">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Update Profile</h1>
+    <form action="" method="POST" class="bg-white p-6 rounded-lg shadow-md space-y-6 max-w-lg mx-auto">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.fullname.label_tag }}
+            {{ form.fullname }}
+        </div>
 
-            <div class="profile-det">
-                {{ form.phone_number.label_tag }}
-                {{ form.phone_number }}
-            </div>
+        <div>
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+        </div>
 
-            <div class="profile-det">
-                {{ form.address.label_tag }}
-                {{ form.address }}
-            </div>
+        <div>
+            {{ form.address.label_tag }}
+            {{ form.address }}
+        </div>
 
-            <div class="profile-det">
-                {{ form.is_seller }}
-                <label for="id_is_seller" class="form-check-label">{{ form.is_seller.label }}</label>
-                <small class="form-text text-muted">{{ form.is_seller.help_text }}</small>
-            </div>
+        <div>
+            {{ form.is_seller }}
+            <label for="id_is_seller" class="form-check-label">{{ form.is_seller.label }}</label>
+            <small>{{ form.is_seller.help_text }}</small>
+        </div>
 
-            <button class="btn profile-btn" type="submit">Update Profile</button>
-        </form>
-    </div>
-</body>
+        <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:ring focus:ring-blue-300 transition duration-200" type="submit">Update Profile</button>
+    </form>
+</div>
 
 {% endblock %}
