@@ -170,6 +170,8 @@ cloudinary.config(
     secure=True
 )
 
+ALLOWED_SELLER_EMAILS = os.environ.get('ALLOWED_SELLER_EMAILS', '').split(',')
+
 
 
 # Default primary key field type

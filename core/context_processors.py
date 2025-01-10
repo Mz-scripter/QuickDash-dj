@@ -1,4 +1,5 @@
 from users.models import Profile
+from django.conf import settings
 
 def global_context(request):
     is_seller = False
@@ -10,7 +11,7 @@ def global_context(request):
         except Profile.DoesNotExist:
             is_seller = False
     
-    allowed_emails = ['mzscripterx5@gmail.com', 'adekomuheez567@gmail.com']
+    allowed_emails = getattr(settings, 'ALLOWED_EMAILS', [])
 
     return {
         'is_seller': is_seller,
