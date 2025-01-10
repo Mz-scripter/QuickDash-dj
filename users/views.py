@@ -99,21 +99,18 @@ def registerPage(request):
     return render(request, 'users/register.html', context)
 
 def verifyEmail(request, code):
-    if request.method == 'POST':
-        try:
-            profile = get_object_or_404(Profile, verification_code=code)
-            if profile.is_verified == True:
-                messages.info(request, 'Your email is already verified.')
-                return redirect('login')
-            else:
-                profile.is_verified = True
-                profile.save()
-                return redirect('verify-email')
-        except Exception as e:
-            messages.error(request, 'Invalid verification link.')
-            return redirect('register')
-    else:
-        return render(request, 'users/auth-process.html', {'page': 'verify-email'})
+    try:
+        profile = get_object_or_404(Profile, verification_code=code)
+        if profile.is_verified == True:
+            messages.info(request, 'Your email is already verified.')
+            return redirect('login')
+        else:
+            profile.is_verified = True
+            profile.save()
+            return redirect('verify-email')
+    except Exception as e:
+        messages.error(request, 'Invalid verification link.')
+        return redirect('register')
     
    
 def verifyEmailPage(request):
