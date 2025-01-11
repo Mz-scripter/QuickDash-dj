@@ -14,7 +14,7 @@ def homePage(request):
     items = Item.objects.filter(
         Q(name__icontains=query) |
         Q(description__icontains=query)
-    )
+    ).order_by('-date_added')
 
 
     if restaurant_filter:

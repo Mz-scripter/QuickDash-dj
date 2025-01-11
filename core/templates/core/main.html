@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/tailwind_output.css' %}">
     <link rel="icon" type="image/jpg" href="{% static 'images/logo.png' %}">
+
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <title>Convenience Delivered, Every Time | QuickDash</title>
 </head>
 <body class="bg-[#cae8ff] text-black relative">
@@ -80,13 +83,15 @@
 
                 <a href="{% url 'profile' %}" class="hidden lg:block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Profile</a>
                 {% if request.user.is_authenticated %}
-                <a href="{% url 'logout' %}" class="hidden lg:block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Logout</a>
+                <a href="{% url 'logout' %}" class="block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Logout</a>
 
                 {% else %}
-                <a href="{% url 'login' %}" class="hidden lg:block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Login</a>
+                <a href="{% url 'login' %}" class="block px-4 py-2 text-gray-700 hover:scale-105 hover:shadow-md cursor-pointer transition-all duration-200 ease-in-out">Login</a>
                 {% endif %}
             </div>
         </div>
+
+        
      </header>
     
      <!-- Floating Contact Icon -->
@@ -104,7 +109,7 @@
         <a href="{% url 'cart' %}" class="flex flex-col items-center space-y-1 relative">
             <img src="{% static 'images/cart.svg' %}" alt="Cart" class="h-6 w-6">
             {% if request.user.is_authenticated %}
-            <span class="absolute -top-3.5 left-4 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ total_items }}</span>
+            <span id="cart-count" class="absolute -top-3.5 left-4 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">{{ total_items }}</span>
             {% endif %}
             <span class="text-xs">Cart</span>
         </a>
@@ -127,6 +132,8 @@
 
       
 </body>
+<script src="{% static 'js/cart.js' %}"></script>
+<script src="{% static 'js/wishlist.js' %}"></script>
 <script>
     const searchBar = document.getElementById("search-bar");
 

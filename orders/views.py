@@ -11,15 +11,24 @@ from datetime import timedelta
 from django.db.models import Sum
 
 
-
 @login_required(login_url='login')
-def add_to_cart(request, item_id):
-    item = get_object_or_404(Item, id=item_id)
-    cart_item, created = CartItem.objects.get_or_create(user=request.user, item=item)
-    if not created:
-        cart_item.quantity += 1
-    cart_item.save()
-    return redirect('home')
+def ajax_add_to_cart(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, id=item_id)
+
+        # Get or create the cart item
+        cart_item, created = CartItem.objects.get_or_create(user=request.user, item=item)
+
+        if not created:
+            cart_item.quantity += 1
+            cart_item.save()
+
+        # Get updated cart total
+        total_items = sum(item.quantity for item in CartItem.objects.filter(user=request.user))
+
+        return JsonResponse({'status': 'success', 'total_items': total_items})
+    return JsonResponse({'status': 'error', 'message': 'Invalid Request'})
 
 @login_required(login_url='login')
 def cartPage(request):
@@ -108,6 +117,25 @@ def toggle_wishlist(request, item_id):
 def wishlist(request):
     wishlist_items = WishListItem.objects.filter(user=request.user).select_related('item')
     return render(request, 'orders/wishlist.html', {'wishlist_items': wishlist_items})
+
+@login_required(login_url='login')
+def ajax_add_to_wishlist(request):
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, id=item_id)
+
+        # Check if the item is already in the wishlist
+        wishlist_item, created = WishListItem.objects.get_or_create(user=request.user, item=item)
+
+        if not created:
+            wishlist_item.delete()
+            status = 'removed'
+        else:
+            wishlist_item.save()
+            status = 'added'
+        
+        return JsonResponse({'status': status})
+    return JsonResponse({'status': 'error', 'message': 'Invalid Request'})
 
 @login_required(login_url='login')
 def checkout(request):

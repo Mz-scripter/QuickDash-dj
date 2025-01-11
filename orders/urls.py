@@ -3,7 +3,8 @@ from . import views
 
 
 urlpatterns = [
-    path('add-to-cart/<int:item_id>/', views.add_to_cart, name='add_to_cart'),
+    path('ajax/add-to-cart', views.ajax_add_to_cart, name='ajax_add_to_cart'),
+
     path('cart/', views.cartPage, name='cart'),
 
     path('cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
@@ -15,7 +16,8 @@ urlpatterns = [
     path('add-restaurant/', views.add_restaurant, name='add_restaurant'),
 
     path('wishlist/', views.wishlist, name='wishlist'),
-    path('wishlist/toggle/<int:item_id>/', views.toggle_wishlist, name='toggle_wishlist'),
+
+    path('ajax/add-to-wishlist/', views.ajax_add_to_wishlist, name='ajax_add_to_wishlist'),
 
     path('checkout/', views.checkout, name='checkout'),
 
