@@ -1,5 +1,5 @@
 # QuickDash-dj
-![Convenience Delivered, Every Time _ QuickDash - Google Chrome 11_21_2024 8_22_11 PM](https://github.com/user-attachments/assets/fecbf333-cc43-44ee-8705-a8f26fe9c616)
+![Convenience Delivered, Every Time _ QuickDash](https://github.com/user-attachments/assets/fecbf333-cc43-44ee-8705-a8f26fe9c616)
 
 QuickDash is an online food ordering platform designed to offer a seamless experience for customers, sellers, and restaurant owners. This Django-based project integrates robust features like authentication, search, cart management, distance calculation, and more.
 
